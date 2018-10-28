@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -32,6 +34,12 @@ public class LogInActivity extends AppCompatActivity {
     private GoogleApiClient mGoogleApiClient;
     private static final int RC_SIGN_IN = 1;
 
+    EditText emailtxt;
+    EditText passwordtxt;
+    Button loginBtn;
+
+    public static Nutzer eingeloggterNutzer;
+
     private FirebaseAuth mAuth;
 
     private Context mCtx;
@@ -45,6 +53,25 @@ public class LogInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+
+        //Deklarationen der einzelnen XML Objekte
+
+        emailtxt = findViewById(R.id.emailEingabetxt);
+        passwordtxt = findViewById(R.id.passwortEingabeTxt);
+        loginBtn = findViewById(R.id.loginBtnEmail);
+
+
+        //Login Button für die Email Anmeldung!
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                anmelden();
+
+
+
+            }
+        });
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -140,6 +167,7 @@ public class LogInActivity extends AppCompatActivity {
                             finish();
                             //   startActivity(getIntent());
 
+
                             Intent myIntent = new Intent(LogInActivity.this, HomeActivity.class);
                             startActivity(myIntent);
                         } else {
@@ -201,6 +229,57 @@ public class LogInActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+
+
+    public void anmelden() {
+
+        //Hi
+        String emailEingabe = emailtxt.getText().toString().trim();
+        String passwortEingabe = passwordtxt.getText().toString().trim();
+
+
+        if(emailEingabe.equals("") || passwortEingabe.equals("")) {
+
+            Toast.makeText(mCtx, "Bitte fülle alle Felder aus!", Toast.LENGTH_SHORT).show();
+
+
+        } else {
+
+
+            mAuth.signInWithEmailAndPassword(emailEingabe, passwortEingabe)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d(TAG, "signInWithEmail:success");
+                                Toast.makeText(mCtx, "Login Erfolgreich", Toast.LENGTH_SHORT).show();
+                                FirebaseUser user = mAuth.getCurrentUser();
+
+                                Intent myIntent = new Intent(LogInActivity.this, HomeActivity.class);
+                                startActivity(myIntent);
+
+
+
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                Toast.makeText(mCtx, "Email oder Password falsch!",
+                                        Toast.LENGTH_SHORT).show();
+
+                            }
+
+                            // ...
+                        }
+                    });
+
+        }
+
+
+
+
     }
 
 }

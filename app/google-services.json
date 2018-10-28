@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "494565774757",
+    "firebase_url": "https://swipe-9e6b5.firebaseio.com",
+    "project_id": "swipe-9e6b5",
+    "storage_bucket": "swipe-9e6b5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:494565774757:android:55695384c11bd759",
+        "android_client_info": {
+          "package_name": "com.example.metinatac.speakout"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "494565774757-d749o6eqthkkfkqpfm335o3mng1f37pf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.metinatac.speakout",
+            "certificate_hash": "c981950dc4cfb3725b92ebd4647bb8b6748a08f5"
+          }
+        },
+        {
+          "client_id": "494565774757-m7933hiiin48mgpaj5ofavhddvd48238.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFOd3FsfbWRBtPWQ9rqhrxRpbp5PJZjwM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "494565774757-m7933hiiin48mgpaj5ofavhddvd48238.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

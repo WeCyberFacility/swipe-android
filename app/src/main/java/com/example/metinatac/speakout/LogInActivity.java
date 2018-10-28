@@ -235,6 +235,7 @@ public class LogInActivity extends AppCompatActivity {
 
     public void anmelden() {
 
+        //Hi
         String emailEingabe = emailtxt.getText().toString().trim();
         String passwortEingabe = passwordtxt.getText().toString().trim();
 

@@ -20,7 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class HomeActivity extends AppCompatActivity {
-
+private int at =0;
     private GoogleSignInClient mGoogleSingInclient;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;

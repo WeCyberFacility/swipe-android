@@ -48,7 +48,7 @@ public class LogInActivity extends AppCompatActivity {
     private static final String TAG = "SignInACTIVITY";
 
 
-
+//hi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

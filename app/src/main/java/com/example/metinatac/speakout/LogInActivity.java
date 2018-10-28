@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -38,14 +39,14 @@ public class LogInActivity extends AppCompatActivity {
 
     private FirebaseAuth.AuthStateListener mAuthListener;
     private static final String TAG = "SignInACTIVITY";
-
+private TextView Register;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
-
+Register = (TextView)findViewById(R.id.textView3);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -202,6 +203,11 @@ public class LogInActivity extends AppCompatActivity {
                     }
                 });
     }
+
+
+
+
+
 
 }
 

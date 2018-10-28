@@ -34,7 +34,7 @@ private int at =0;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        likeActionBar.findViewById(R.id.homeToolBar);
+
 
 
         db = FirebaseFirestore.getInstance();

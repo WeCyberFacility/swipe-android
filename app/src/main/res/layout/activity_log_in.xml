@@ -15,6 +15,8 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/shape"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="40dp"
         android:ems="10"
 
         android:fontFamily="@font/annie_use_your_telescope"
@@ -110,12 +112,13 @@
 
     <ImageView
         android:id="@+id/logoSwipe"
-        android:layout_width="347dp"
-        android:layout_height="169dp"
+        android:layout_width="345dp"
+        android:layout_height="151dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.521"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/logoschrift" />
@@ -127,9 +130,11 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:background="@android:color/white"
+        android:background="@drawable/shape"
+
         android:fontFamily="@font/annie_use_your_telescope"
         android:text="Login"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwortEingabeTxt" />
@@ -137,7 +142,7 @@
     <TextView
         android:id="@+id/ErrorEmptyFields"
         android:layout_width="242dp"
-        android:layout_height="21dp"
+        android:layout_height="24dp"
         android:layout_marginBottom="9dp"
         android:layout_marginEnd="72dp"
         android:layout_marginStart="70dp"
@@ -146,8 +151,10 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/emailEingabetxt"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginTxt" />
+        app:layout_constraintTop_toBottomOf="@+id/loginTxt"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </android.support.constraint.ConstraintLayout>

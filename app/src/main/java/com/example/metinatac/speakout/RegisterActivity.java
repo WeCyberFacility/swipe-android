@@ -66,12 +66,12 @@ public class RegisterActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Nutzer");
 
-        if(     nameEingabe.getText().toString().equals("") == true ||
-                nachnameEingabe.getText().toString().equals("") == true ||
-                emailEingabe.getText().toString().equals("") == true ||
-                passwortEingabe.getText().toString().equals("") == true ||
-                passwortRepeatEingabe.getText().toString().equals("") == true ||
-                benutzernameEingabe.getText().toString().equals("") == true ) {
+        if(     nameEingabe.getText().equals("") == true ||
+                nachnameEingabe.getText().equals("") == true ||
+                emailEingabe.getText().equals("") == true ||
+                passwortEingabe.getText().equals("") == true ||
+                passwortRepeatEingabe.getText().equals("") == true ||
+                benutzernameEingabe.getText().equals("") == true ) {
 
             //wenn eins der Felder leer sein sollte, so gebe eine Fehlermeldung aus!
 

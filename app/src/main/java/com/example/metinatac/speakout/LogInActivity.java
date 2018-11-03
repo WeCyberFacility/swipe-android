@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,7 +46,7 @@ public class LogInActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
-    private Context mCtx ;
+    private Context mCtx;
 
     private FirebaseAuth.AuthStateListener mAuthListener;
     private static final String TAG = "SignInACTIVITY";
@@ -110,15 +109,6 @@ public class LogInActivity extends AppCompatActivity {
         //SignInButton signInButton = findViewById(R.id.googleBtn);
         //signInButton.setSize(SignInButton.SIZE_WIDE);
 
-
-        ImageButton signInButton = findViewById(R.id.googleBtn);
-
-
-
-
-
-
-
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -127,16 +117,13 @@ public class LogInActivity extends AppCompatActivity {
 
         mGoogleSingInclient = GoogleSignIn.getClient(this, gso);
 
-
-        signInButton.setOnClickListener(new View.OnClickListener() {
+       /* signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 signIn();
 
             }
-        });
-
-
+        });*/
         Task<Void> voidTask = mGoogleSingInclient.revokeAccess()
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
@@ -298,7 +285,7 @@ ErrorEmpty.setText("*Bitte Felder ausfüllen!");
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d(TAG, "signInWithEmail:success");
-                    //            Toast.makeText(mCtx, "Login Erfolgreich", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mCtx, "Login Erfolgreich", Toast.LENGTH_SHORT).show();
                                 FirebaseUser user = mAuth.getCurrentUser();
 
                                 Intent myIntent = new Intent(LogInActivity.this, HomeActivity.class);
@@ -309,8 +296,8 @@ finish();
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
-                           //     Toast.makeText(mCtx, "Email oder Password falsch!",
-                             //           Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mCtx, "Email oder Password falsch!",
+                                        Toast.LENGTH_SHORT).show();
 
                             }
 

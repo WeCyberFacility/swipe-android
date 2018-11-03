@@ -9,7 +9,7 @@ public class GoogleNutzer {
         private String name;
         private String nachname;
         private String username;
-      
+
         private String email;
         private int follower;
 

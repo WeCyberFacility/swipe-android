@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -79,8 +80,8 @@ public class LogInActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        SignInButton signInButton = findViewById(R.id.googleBtn);
-        signInButton.setSize(SignInButton.SIZE_WIDE);
+        ImageButton signInButton = findViewById(R.id.googleBtn);
+       // signInButton.setSize(SignInButton.SIZE_WIDE);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))

@@ -263,7 +263,7 @@ ErrorEmpty.setText("*Bitte Felder ausfüllen!");
 
                                 Intent myIntent = new Intent(LogInActivity.this, HomeActivity.class);
                                 startActivity(myIntent);
-
+finish();
 
 
                             } else {

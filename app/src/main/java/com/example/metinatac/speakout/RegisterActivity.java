@@ -49,6 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
+                registrieren();
 
             }
         });
@@ -111,7 +112,7 @@ public class RegisterActivity extends AppCompatActivity {
                             Toast.makeText(RegisterActivity.this, "Registrierung Fehlgeschlagen!", Toast.LENGTH_SHORT).show();
                             
                         }
-                        
+
                         
                     }
                 });

@@ -40,6 +40,7 @@ public class LogInActivity extends AppCompatActivity {
     EditText passwordtxt;
     Button loginBtn;
     TextView ErrorEmpty;
+    TextView neuerAccountErstellenTXT;
 
     public static Nutzer eingeloggterNutzer;
 
@@ -59,10 +60,36 @@ public class LogInActivity extends AppCompatActivity {
 
         //Deklarationen der einzelnen XML Objekte
 
+        neuerAccountErstellenTXT = findViewById(R.id.neuerAccountTxt);
         emailtxt = findViewById(R.id.emailEingabetxt);
         passwordtxt = findViewById(R.id.passwortEingabeTxt);
         loginBtn = findViewById(R.id.loginBtnEmail);
         ErrorEmpty = findViewById(R.id.ErrorEmptyFields);
+
+
+
+
+
+
+        //Buttons:
+
+
+        //
+        neuerAccountErstellenTXT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(new Intent(LogInActivity.this, RegisterActivity.class));
+
+
+            }
+        });
+
+
+
+
+
+
 
         //Login Button für die Email Anmeldung!
         loginBtn.setOnClickListener(new View.OnClickListener() {
@@ -79,8 +106,8 @@ public class LogInActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        SignInButton signInButton = findViewById(R.id.googleBtn);
-        signInButton.setSize(SignInButton.SIZE_WIDE);
+        //SignInButton signInButton = findViewById(R.id.googleBtn);
+        //signInButton.setSize(SignInButton.SIZE_WIDE);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -90,13 +117,13 @@ public class LogInActivity extends AppCompatActivity {
 
         mGoogleSingInclient = GoogleSignIn.getClient(this, gso);
 
-        signInButton.setOnClickListener(new View.OnClickListener() {
+       /* signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 signIn();
 
             }
-        });
+        });*/
         Task<Void> voidTask = mGoogleSingInclient.revokeAccess()
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override

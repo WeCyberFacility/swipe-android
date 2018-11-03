@@ -77,7 +77,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             Toast.makeText(this, "Bitte fülle alle Felder aus!", Toast.LENGTH_SHORT).show();
 
-
+//
         } else {
 
             String nameeingabe = nameEingabe.getText().toString().trim();

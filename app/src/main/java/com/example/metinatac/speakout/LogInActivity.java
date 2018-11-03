@@ -140,6 +140,7 @@ public class LogInActivity extends AppCompatActivity {
 
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
+
         // updateUI(currentUser);
         //  mGoogleApiClient.connect(); // <- Verursacht FEHLER (Crash)
         if (currentUser != null) {

@@ -7,15 +7,17 @@ public class Nutzer {
     private String nachname;
     private String username;
     private String password;
+    private String email;
     private int follower;
 
-    public Nutzer(String id, String name, String nachname, String username, String password, int follower) {
+    public Nutzer(String id, String name, String nachname, String username, String password, String email, int follower) {
 
         this.id = id;
         this.name = name;
         this.nachname = nachname;
         this.username = username;
         this.password = password;
+        this.email = email;
         this.follower = follower;
 
 
@@ -72,5 +74,13 @@ public class Nutzer {
 
     public void setFollower(int follower) {
         this.follower = follower;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

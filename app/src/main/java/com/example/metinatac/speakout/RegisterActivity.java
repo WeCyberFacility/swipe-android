@@ -84,9 +84,10 @@ public class RegisterActivity extends AppCompatActivity {
 
                     if (i % 2 == 0) {
                         hashedChars[i] = doubleAllChars.charAt(i + j + 8);
+                        break;
                     } else {
                         hashedChars[i] = doubleAllChars.charAt(i + j + 4);
-
+                        break;
                     }
 
 

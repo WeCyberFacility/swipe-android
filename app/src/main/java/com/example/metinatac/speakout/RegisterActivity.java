@@ -95,7 +95,7 @@ public class RegisterActivity extends AppCompatActivity {
                     count++;
 
 
-                    if (count == 68) {
+                    if (count == allChars.length()) {
                         hashedChars[i] = inputPW.charAt(i);
                         count = 0;
                     }
@@ -194,4 +194,62 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     }
+
+
+    private String entschluesselPW(String PW){
+        int count=0;
+
+        String hashedPW;
+
+        String allChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,.-öäü";
+
+        String reversedAll = new StringBuilder(allChars).reverse().toString();
+
+        String doubleAllChars= "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,.-öäü" +
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,.-öäü";
+
+        String reversedDoubleAll = new StringBuilder(doubleAllChars).reverse().toString();
+
+        char[] hashedChars = new char[PW.length()];
+
+
+        for(int i =0;i<PW.length();i++) {
+
+            for (int j = 0; j <  reversedAll.length(); j++) {
+
+
+                if (PW.charAt(i) ==  reversedAll.charAt(j)) {
+
+                    if (i % 2 == 0) {
+                        hashedChars[i] =reversedDoubleAll.charAt(i + j + 8);
+                        break;
+                    } else {
+                        hashedChars[i] = reversedDoubleAll.charAt(i + j + 4);
+                        break;
+                    }
+
+
+                } else {
+                    count++;
+
+
+                    if (count == reversedAll.length()) {
+                        hashedChars[i] = PW.charAt(i);
+                        count = 0;
+                    }
+
+                }
+
+            }
+        }
+
+        hashedPW= String.valueOf(hashedChars);
+        Log.d(TAG,hashedPW);
+
+        return hashedPW;
+    }
+
+
+
+
 }

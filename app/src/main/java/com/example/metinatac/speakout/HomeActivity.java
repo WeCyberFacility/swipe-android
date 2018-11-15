@@ -27,6 +27,8 @@ public class HomeActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer,
                 new HomeFragment()).commit();
 
+        int a = 0;
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

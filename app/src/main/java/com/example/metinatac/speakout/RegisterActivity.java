@@ -69,6 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
         String allChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,.-öäü";
 
         String doubleAllChars= "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,.-öäü" +
+                               "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,.-öäü"+
                                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,.-öäü";
 
 
@@ -121,7 +122,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Nutzer");
+        final DatabaseReference myRef = database.getReference("Nutzer");
 
         if(     nameEingabe.getText().toString().equals("") == true ||
                 nachnameEingabe.getText().toString().equals("") == true ||
@@ -137,11 +138,11 @@ public class RegisterActivity extends AppCompatActivity {
 //
         } else {
 
-            String nameeingabe = nameEingabe.getText().toString().trim();
-            String nachnameeingabe = nachnameEingabe.getText().toString().trim();
-            String emaileingabe = emailEingabe.getText().toString().trim();
-            String benutzernameeingabe = benutzernameEingabe.getText().toString().trim();
-            String passworteingabe = passwortEingabe.getText().toString().trim();
+            final String nameeingabe = nameEingabe.getText().toString().trim();
+            final String nachnameeingabe = nachnameEingabe.getText().toString().trim();
+            final String emaileingabe = emailEingabe.getText().toString().trim();
+            final String benutzernameeingabe = benutzernameEingabe.getText().toString().trim();
+            final String passworteingabe = passwortEingabe.getText().toString().trim();
             String passworteingaberepeat = passwortRepeatEingabe.getText().toString().trim();
             
             if(passworteingabe.equals(passworteingaberepeat) == false) {
@@ -152,12 +153,10 @@ public class RegisterActivity extends AppCompatActivity {
 
 
 
-                String idd = myRef.push().getKey();
-                Nutzer neuerNutzer = new Nutzer(idd, nameeingabe, nachnameeingabe, benutzernameeingabe, verschluesselPW(passworteingabe), emaileingabe, 0);
-                myRef.child(idd).setValue(neuerNutzer);
+
                 
                 
-                mAuth.createUserWithEmailAndPassword(emaileingabe, verschluesselPW(passworteingabe)).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                mAuth.createUserWithEmailAndPassword(emaileingabe, passworteingabe).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         
@@ -171,18 +170,27 @@ public class RegisterActivity extends AppCompatActivity {
 
 
 
-                            
+                            Nutzer neuerNutzer = new Nutzer(mAuth.getCurrentUser().getUid(), nameeingabe, nachnameeingabe, benutzernameeingabe, verschluesselPW(passworteingabe), emaileingabe, 0);
+                            myRef.child(mAuth.getCurrentUser().getUid()).setValue(neuerNutzer);
+
+
+
+
                         } else {
 
                             Toast.makeText(RegisterActivity.this, "Registrierung Fehlgeschlagen!", Toast.LENGTH_SHORT).show();
                             
                         }
 
+
+
                         
                     }
                 });
-                
-                
+
+
+               // String idd = myRef.push().getKey();
+
                 
             }
 
@@ -206,7 +214,8 @@ public class RegisterActivity extends AppCompatActivity {
         String reversedAll = new StringBuilder(allChars).reverse().toString();
 
         String doubleAllChars= "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,.-öäü" +
-                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,.-öäü";
+                               "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,.-öäü"+
+                               "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,.-öäü";
 
         String reversedDoubleAll = new StringBuilder(doubleAllChars).reverse().toString();
 

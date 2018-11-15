@@ -281,7 +281,7 @@ public class LogInActivity extends AppCompatActivity {
 
         //Hi
         String emailEingabe = emailtxt.getText().toString().trim();
-        String passwortEingabe =RegisterActivity.verschluesselPW(passwordtxt.getText().toString()).trim();
+        String passwortEingabe =passwordtxt.getText().toString().trim();
 
 Log.d(TAG,passwortEingabe);
         if(emailEingabe.equals("") || passwortEingabe.equals("")) {

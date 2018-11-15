@@ -35,7 +35,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/neuerAccountTxt" />
+        app:layout_constraintTop_toBottomOf="@+id/neuerAccountTxt"
+        app:layout_constraintVertical_bias="0.51" />
 
     <TextView
         android:id="@+id/loginTxt"
@@ -56,12 +57,11 @@
         android:id="@+id/emailEingabetxt"
         android:layout_width="245dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="40dp"
-
         android:ems="10"
+
         android:fontFamily="@font/annie_use_your_telescope"
         android:hint="E-Mail"
         android:inputType="textPersonName"
@@ -69,7 +69,6 @@
         android:textColor="@android:color/white"
         android:textColorHint="@android:color/white"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/passwortEingabeTxt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,20 +78,18 @@
         android:id="@+id/passwortEingabeTxt"
         android:layout_width="244dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="11dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-
         android:ems="10"
+
+        android:textColorHint="@android:color/white"
         android:fontFamily="@font/annie_use_your_telescope"
-        android:hint="Passwort"
         android:inputType="textPassword"
         android:text=""
+        android:hint="Passwort"
         android:textColor="@android:color/white"
-        android:textColorHint="@android:color/white"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/loginBtnEmail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
@@ -104,12 +101,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:fontFamily="@font/annie_use_your_telescope"
         android:text="Noch kein Account?   -  Jetzt Registrieren"
         android:textColor="@android:color/white"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/oderTxt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
@@ -133,16 +128,13 @@
         android:id="@+id/loginBtnEmail"
         android:layout_width="114dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-
         android:background="@drawable/shape"
-        android:fontFamily="@font/annie_use_your_telescope"
 
+        android:fontFamily="@font/annie_use_your_telescope"
         android:text="Login"
-        app:layout_constraintBottom_toTopOf="@+id/neuerAccountTxt"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwortEingabeTxt" />

@@ -268,9 +268,9 @@ public class LogInActivity extends AppCompatActivity {
 
         //Hi
         String emailEingabe = emailtxt.getText().toString().trim();
-        String passwortEingabe = passwordtxt.getText().toString().trim();
+        String passwortEingabe =passwordtxt.getText().toString().trim();
 
-
+Log.d(TAG,passwortEingabe);
         if(emailEingabe.equals("") || passwortEingabe.equals("")) {
 
          //   Toast.makeText(mCtx, "Bitte fülle alle Felder aus!", Toast.LENGTH_SHORT).show();
@@ -279,7 +279,7 @@ ErrorEmpty.setText("*Bitte Felder ausfüllen!");
         } else {
 
 
-            mAuth.signInWithEmailAndPassword(emailEingabe, passwortEingabe)
+            mAuth.signInWithEmailAndPassword(emailEingabe,passwortEingabe )
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -295,6 +295,8 @@ finish();
 
 
                             } else {
+
+                                ErrorEmpty.setText("*E-Mail oder Passwort falsch!");
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
                                 Toast.makeText(mCtx, "Email oder Password falsch!",

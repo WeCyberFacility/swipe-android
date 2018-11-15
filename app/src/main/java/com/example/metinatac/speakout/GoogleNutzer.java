@@ -4,7 +4,6 @@ public class GoogleNutzer {
 
 
 
-
         private String id;
         private String name;
         private String nachname;

@@ -24,10 +24,8 @@ public class HomeActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer,
-                new HomeFragment()).commit();
 
-        int a = 0;
+        getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer,new HomeFragment()).commit();
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -61,8 +59,6 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.profil) {
             // Handle the camera action
         } else if (id == R.id.suchen) {
-
-
 
         } else if (id == R.id.einstellungen) {
 

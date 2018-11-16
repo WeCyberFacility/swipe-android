@@ -17,11 +17,8 @@
             android:id="@+id/einstellungen"
             android:icon="@mipmap/settingsdrawericon"
             android:title="Einstellungen" />
-        <item
 
-            android:id="@+id/logout"
-            android:icon="@mipmap/logoutdrawericon"
-            android:title="Logout" />
+
 
     </group>
 

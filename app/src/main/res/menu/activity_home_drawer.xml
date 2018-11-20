@@ -24,6 +24,9 @@
             android:icon="@mipmap/settingsdrawericon"
             android:title="Einstellungen" />
 
+        <item
+            android:title="Löschen"
+></item>
 
 
     </group>

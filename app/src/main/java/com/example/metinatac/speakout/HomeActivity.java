@@ -91,6 +91,7 @@ userName.setText(currentUser.getDisplayName());
         getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer,
                 new HomeFragment()).commit();
 
+        navigationView.setCheckedItem(R.id.home);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -153,12 +154,40 @@ logout.setOnClickListener(new View.OnClickListener() {
         int id = item.getItemId();
 
         if (id == R.id.profil) {
+            //Was passiert wenn man PROFIL im Drawer drückt
             // Handle the camera action
+
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer,
+                    new ProfilFragment()).commit();
+
+
+
+
         } else if (id == R.id.suchen) {
+            //Was passiert wenn man SUCHEN im Drawer drückt
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer,
+                    new SuchenFragment()).commit();
 
 
 
         } else if (id == R.id.einstellungen) {
+            //Was passiert wenn man EINSTELLUNGEN im Drawer drückt
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer,
+                    new EinstellungenFragment()).commit();
+
+
+
+
+        } else if (id == R.id.home) {
+            //Was passiert wenn man HOME im Drawer drückt
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer,
+                    new HomeFragment()).commit();
+
+
 
         }
 

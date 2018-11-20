@@ -50,7 +50,7 @@ public class HomeActivity extends AppCompatActivity
     ImageView  drawerPb;
     TextView userName;
 
-
+    View headerView;
 
 
 
@@ -79,9 +79,8 @@ public class HomeActivity extends AppCompatActivity
 
 
 
-        View headerView = navigationView.getHeaderView(0);
+        headerView = navigationView.getHeaderView(0);
 
-logout= headerView.findViewById(R.id.logout);
 
 
 userName = headerView.findViewById(R.id.nametxt);
@@ -92,7 +91,7 @@ userName.setText(currentUser.getDisplayName());
         getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer,
                 new HomeFragment()).commit();
 
-        
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -107,12 +106,33 @@ userName.setText(currentUser.getDisplayName());
         Picasso.get().load(profilePicture).transform(new CropCircleTransformation()).into(drawerPb);
 
 
-        Log.d(TAG,profilePicture.toString());
+
 
 
     }
 
+    protected void onStart() {
 
+        super.onStart();
+
+NavigationView nav = findViewById(R.id.nav_view);
+
+  logout = nav.findViewById(R.id.logout);
+
+logout.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        signOut();
+        finish();
+        startActivity(new Intent(HomeActivity.this, LogInActivity.class));
+    }
+});
+        /*   String userName = currentUser.getDisplayName();
+            Toast.makeText(this, "Willkommen "+userName, Toast.LENGTH_SHORT).show();
+            String username = currentUser.getDisplayName();
+*/
+
+    }
 
 
     @Override
@@ -124,7 +144,6 @@ userName.setText(currentUser.getDisplayName());
             super.onBackPressed();
         }
     }
-
 
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -141,9 +160,8 @@ userName.setText(currentUser.getDisplayName());
 
         } else if (id == R.id.einstellungen) {
 
-
-
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

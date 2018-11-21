@@ -50,6 +50,8 @@ public class HomeActivity extends AppCompatActivity
     ImageView  drawerPb;
     TextView userName;
 
+    static boolean emailLogin;
+
     View headerView;
 
 
@@ -80,31 +82,47 @@ public class HomeActivity extends AppCompatActivity
 
 
         headerView = navigationView.getHeaderView(0);
-
-
-
-userName = headerView.findViewById(R.id.nametxt);
-
-userName.setText(currentUser.getDisplayName());
-
+        userName = headerView.findViewById(R.id.nametxt);
         drawerPb = headerView.findViewById(R.id.drawerpb);
-        getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer,
-                new HomeFragment()).commit();
-
-        navigationView.setCheckedItem(R.id.home);
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
 
 
-        navigationView.setNavigationItemSelectedListener(this);
 
-       Uri profilePicture = currentUser.getPhotoUrl();
 
-        Picasso.get().load(profilePicture).transform(new CropCircleTransformation()).into(drawerPb);
+        if(emailLogin == true) {
+
+
+
+
+        } else {
+
+
+
+            userName.setText(currentUser.getDisplayName());
+
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer,
+                    new HomeFragment()).commit();
+
+            navigationView.setCheckedItem(R.id.home);
+
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawer.addDrawerListener(toggle);
+            toggle.syncState();
+
+
+            navigationView.setNavigationItemSelectedListener(this);
+
+            Uri profilePicture = currentUser.getPhotoUrl();
+
+            Picasso.get().load(profilePicture).transform(new CropCircleTransformation()).into(drawerPb);
+
+
+        }
+
+
+
 
 
 

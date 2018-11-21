@@ -171,7 +171,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
                             Nutzer neuerNutzer = new Nutzer(mAuth.getCurrentUser().getUid(), nameeingabe, nachnameeingabe, benutzernameeingabe, verschluesselPW(passworteingabe), emaileingabe, 0);
-                            myRef.child(mAuth.getCurrentUser().getUid()).setValue(neuerNutzer);
+                            myRef.child(mAuth.getCurrentUser().getUid()).child("Daten").setValue(neuerNutzer);
 
 
 

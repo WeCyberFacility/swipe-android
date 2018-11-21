@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.metinatac.speakout"
-
-    >
+    package="com.example.metinatac.speakout">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -11,7 +9,7 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/appicon"
-android:label="Swipe"
+        android:label="Swipe"
         android:roundIcon="@mipmap/appicon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -32,7 +30,8 @@ android:label="Swipe"
         <activity
             android:name=".HomeActivity"
             android:label=""
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".GoogleUserRegisterActivity"></activity>
     </application>
 
 </manifest>

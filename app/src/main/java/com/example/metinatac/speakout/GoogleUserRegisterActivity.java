@@ -83,6 +83,10 @@ public class GoogleUserRegisterActivity extends AppCompatActivity {
         Nutzer neuerNutzer = new Nutzer(ID, Name, Nachname, userNAme,pw, email, 0);
         myRef.child(mAuth.getCurrentUser().getUid()).child("Daten").setValue(neuerNutzer);
 
+
+
+        startActivity(new Intent(GoogleUserRegisterActivity.this, HomeActivity.class));
+        finish();
     }
 
 

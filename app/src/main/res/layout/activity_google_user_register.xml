@@ -26,7 +26,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/RegisterNameIn"
+        android:id="@+id/googleUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -64,20 +64,21 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <Button
-        android:id="@+id/loginTxt"
+        android:id="@+id/weiterBtn"
         android:layout_width="105dp"
         android:layout_height="45dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
+        android:background="@drawable/shape"
         android:fontFamily="@font/annie_use_your_telescope"
+        android:onClick="createNewGoogleUser"
         android:text="WEITER"
         android:textColor="#000000"
         android:textSize="18sp"
-        android:background="@drawable/shape"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RegisterNameIn" />
+        app:layout_constraintTop_toBottomOf="@+id/googleUserName" />
 
 
 

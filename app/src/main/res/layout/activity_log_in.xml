@@ -44,7 +44,7 @@
         app:layout_constraintVertical_bias="0.51" />
 
     <TextView
-        android:id="@+id/loginTxt"
+        android:id="@+id/weiterBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -77,7 +77,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginTxt" />
+        app:layout_constraintTop_toBottomOf="@+id/weiterBtn" />
 
     <EditText
         android:id="@+id/passwortEingabeTxt"
@@ -157,7 +157,7 @@
         app:layout_constraintBottom_toTopOf="@+id/emailEingabetxt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginTxt" />
+        app:layout_constraintTop_toBottomOf="@+id/weiterBtn" />
 
 
 </android.support.constraint.ConstraintLayout>

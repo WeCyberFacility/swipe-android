@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -13,11 +16,21 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class GoogleUserRegisterActivity extends AppCompatActivity {
 
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    final DatabaseReference myRef = database.getReference("Nutzer");
+
+
     private GoogleSignInClient mGoogleSingInclient;
     private FirebaseAuth mAuth;
+   private Button weiter;
+   private EditText uname ;
+   FirebaseUser user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,12 +50,9 @@ public class GoogleUserRegisterActivity extends AppCompatActivity {
 
 
         mGoogleSingInclient = GoogleSignIn.getClient(this, gso);
-
-
-
-
-
-
+        user = mAuth.getCurrentUser();
+        weiter = findViewById(R.id.weiterBtn);
+        uname = findViewById(R.id.googleUserName);
 
     }
 
@@ -62,6 +72,25 @@ public class GoogleUserRegisterActivity extends AppCompatActivity {
     }
 
 
+    public void createNewGoogleUser(View V){
+        String Name  = user.getDisplayName().trim();
+        String Nachname = "";
+        String ID =user.getUid();
+        String userNAme = uname.getText().toString().trim();
+        String pw ="GoogleAuth".trim();
+        String email = user.getEmail().trim();
+
+        Nutzer neuerNutzer = new Nutzer(ID, Name, Nachname, userNAme,pw, email, 0);
+        myRef.child(mAuth.getCurrentUser().getUid()).child("Daten").setValue(neuerNutzer);
+
+    }
+
+
+
+
+
+
+
 
     @Override
     public void onBackPressed() {
@@ -71,6 +100,9 @@ public class GoogleUserRegisterActivity extends AppCompatActivity {
         finish();
 
     }
+
+
+
 
 
 

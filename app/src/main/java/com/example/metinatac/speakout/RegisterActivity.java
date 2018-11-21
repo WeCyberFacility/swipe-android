@@ -36,7 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        nameEingabe = findViewById(R.id.RegisterNameIn);
+        nameEingabe = findViewById(R.id.googleUserName);
         nachnameEingabe = findViewById(R.id.RegisterSurnameIn);
         emailEingabe = findViewById(R.id.RegisterEmailIn);
         passwortEingabe = findViewById(R.id.RegisterPasswordIn);

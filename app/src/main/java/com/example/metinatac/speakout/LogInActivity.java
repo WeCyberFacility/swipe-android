@@ -111,6 +111,10 @@ public class LogInActivity extends AppCompatActivity {
             }
         });
 
+        ImageButton signInButton = findViewById(R.id.googleBtn);
+
+
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -118,7 +122,7 @@ public class LogInActivity extends AppCompatActivity {
         //signInButton.setSize(SignInButton.SIZE_WIDE);
 
 
-        ImageButton signInButton = findViewById(R.id.googleBtn);
+
 
 
 
@@ -163,7 +167,7 @@ public class LogInActivity extends AppCompatActivity {
 
         // updateUI(currentUser);
         //  mGoogleApiClient.connect(); // <- Verursacht FEHLER (Crash)
-        if (currentUser != null) {
+        if (currentUser != null&& checkObExistiert()) {
 
             startActivity(new Intent(LogInActivity.this, HomeActivity.class));
 
@@ -171,10 +175,7 @@ public class LogInActivity extends AppCompatActivity {
             //startActivity(getIntent());
 
 
-
-
         }
-
 
     }
 
@@ -231,7 +232,7 @@ public class LogInActivity extends AppCompatActivity {
 
                                 Toast.makeText(LogInActivity.this, "User in der Datenbank nicht gefunden", Toast.LENGTH_SHORT).show();
 
-                                GoogleUserRegisterActivity.currentUser = mAuth.getCurrentUser();
+
                                 Intent myIntent = new Intent(LogInActivity.this, GoogleUserRegisterActivity.class);
                                 startActivity(myIntent);
 
@@ -250,7 +251,7 @@ public class LogInActivity extends AppCompatActivity {
     }
 
 
-    public void checkObExistiert() {
+    public boolean checkObExistiert() {
 
         gefunden = false;
 
@@ -267,11 +268,11 @@ public class LogInActivity extends AppCompatActivity {
 
                     Nutzer currentUser = ds.child("Daten").getValue(Nutzer.class);
 
-
                     if(currentUser.getId().equals(mAuth.getCurrentUser().getUid())) {
 
                         Toast.makeText(LogInActivity.this, "User gefunden!", Toast.LENGTH_SHORT).show();
                         gefunden = true;
+
                         break;
 
 
@@ -294,7 +295,7 @@ public class LogInActivity extends AppCompatActivity {
             }
         });
 
-
+return gefunden;
 
 
     }

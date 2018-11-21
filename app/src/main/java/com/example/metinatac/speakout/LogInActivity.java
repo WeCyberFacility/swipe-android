@@ -171,11 +171,7 @@ public class LogInActivity extends AppCompatActivity {
 
         if (currentUser != null ) {
             checkObExistiert();
-            if(gefunden == true) {
 
-                startActivity(new Intent(LogInActivity.this, HomeActivity.class));
-
-            }
 
             //startActivity(getIntent())
 

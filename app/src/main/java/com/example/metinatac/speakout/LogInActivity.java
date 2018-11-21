@@ -167,7 +167,9 @@ public class LogInActivity extends AppCompatActivity {
 
         // updateUI(currentUser);
         //  mGoogleApiClient.connect(); // <- Verursacht FEHLER (Crash)
-        if (currentUser != null&& checkObExistiert()) {
+
+        checkObExistiert();
+        if (currentUser != null&& gefunden) {
 
 
 
@@ -255,7 +257,7 @@ public class LogInActivity extends AppCompatActivity {
     }
 
 
-    public boolean checkObExistiert() {
+    public void checkObExistiert() {
 
         gefunden = false;
 
@@ -299,7 +301,7 @@ public class LogInActivity extends AppCompatActivity {
             }
         });
 
-return gefunden;
+
 
 
 

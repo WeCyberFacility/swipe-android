@@ -169,6 +169,9 @@ public class LogInActivity extends AppCompatActivity {
         //  mGoogleApiClient.connect(); // <- Verursacht FEHLER (Crash)
         if (currentUser != null&& checkObExistiert()) {
 
+
+
+
             startActivity(new Intent(LogInActivity.this, HomeActivity.class));
 
 
@@ -222,6 +225,7 @@ public class LogInActivity extends AppCompatActivity {
                             checkObExistiert();
 
                             if(gefunden == true) {
+
 
 
                                 Intent myIntent = new Intent(LogInActivity.this, HomeActivity.class);
@@ -296,6 +300,8 @@ public class LogInActivity extends AppCompatActivity {
         });
 
 return gefunden;
+
+
 
 
     }
@@ -378,6 +384,7 @@ ErrorEmpty.setText("*Bitte Felder ausfüllen!");
                                 FirebaseUser user = mAuth.getCurrentUser();
 
                                 HomeActivity.emailLogin = true;
+                                HomeActivity.currentUserAngemeldet = mAuth.getCurrentUser();
 
                                 Intent myIntent = new Intent(LogInActivity.this, HomeActivity.class);
                                 startActivity(myIntent);

@@ -168,17 +168,16 @@ public class LogInActivity extends AppCompatActivity {
         // updateUI(currentUser);
         //  mGoogleApiClient.connect(); // <- Verursacht FEHLER (Crash)
 
-        checkObExistiert();
-        if (currentUser != null&& gefunden) {
 
+        if (currentUser != null ) {
+            checkObExistiert();
+            if(gefunden == true) {
 
+                startActivity(new Intent(LogInActivity.this, HomeActivity.class));
 
+            }
 
-            startActivity(new Intent(LogInActivity.this, HomeActivity.class));
-
-
-            //startActivity(getIntent());
-
+            //startActivity(getIntent())
 
         }
 
@@ -226,23 +225,6 @@ public class LogInActivity extends AppCompatActivity {
 
                             checkObExistiert();
 
-                            if(gefunden == true) {
-
-
-
-                                Intent myIntent = new Intent(LogInActivity.this, HomeActivity.class);
-                                startActivity(myIntent);
-
-
-                            } else {
-
-                                Toast.makeText(LogInActivity.this, "User in der Datenbank nicht gefunden", Toast.LENGTH_SHORT).show();
-
-
-                                Intent myIntent = new Intent(LogInActivity.this, GoogleUserRegisterActivity.class);
-                                startActivity(myIntent);
-
-                            }
 
 
                         } else {
@@ -291,6 +273,25 @@ public class LogInActivity extends AppCompatActivity {
 
 
                 }
+
+                if(gefunden == true) {
+
+
+
+                    Intent myIntent = new Intent(LogInActivity.this, HomeActivity.class);
+                    startActivity(myIntent);
+
+
+                } else {
+
+                    Toast.makeText(LogInActivity.this, "User in der Datenbank nicht gefunden", Toast.LENGTH_SHORT).show();
+
+
+                    Intent myIntent = new Intent(LogInActivity.this, GoogleUserRegisterActivity.class);
+                    startActivity(myIntent);
+
+                }
+
 
 
             }

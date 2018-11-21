@@ -11,10 +11,9 @@
         android:id="@+id/textView5"
         android:layout_width="348dp"
         android:layout_height="76dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="32dp"
         android:fontFamily="@font/annie_use_your_telescope"
         android:text="Das erste Mal hier ?"
         android:textAlignment="center"
@@ -22,20 +21,17 @@
         android:textColor="@android:color/white"
         android:textSize="36sp"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.13" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/RegisterNameIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="258dp"
-        android:layout_marginEnd="80dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="11dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:fontFamily="@font/cutive"
         android:hint="Benutzer Name"
@@ -44,9 +40,7 @@
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textColorHint="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
@@ -54,11 +48,10 @@
         android:id="@+id/textView6"
         android:layout_width="175dp"
         android:layout_height="43dp"
-        android:layout_marginBottom="11dp"
-        android:layout_marginEnd="92dp"
-        android:layout_marginStart="93dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
 
-        android:layout_marginTop="89dp"
+        android:layout_marginTop="90dp"
         android:fontFamily="@font/annie_use_your_telescope"
 
         android:text="-Willkommen-"
@@ -66,7 +59,6 @@
         android:textColor="@android:color/white"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/RegisterNameIn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
@@ -75,12 +67,17 @@
         android:id="@+id/loginTxt"
         android:layout_width="105dp"
         android:layout_height="45dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
         android:fontFamily="@font/annie_use_your_telescope"
         android:text="WEITER"
         android:textColor="#000000"
         android:textSize="18sp"
-        tools:layout_editor_absoluteX="128dp"
-        tools:layout_editor_absoluteY="348dp" />
+        android:background="@drawable/shape"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/RegisterNameIn" />
 
 
 

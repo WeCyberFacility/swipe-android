@@ -231,6 +231,9 @@ public class LogInActivity extends AppCompatActivity {
 
                                 Toast.makeText(LogInActivity.this, "User in der Datenbank nicht gefunden", Toast.LENGTH_SHORT).show();
 
+                                GoogleUserRegisterActivity.currentUser = mAuth.getCurrentUser();
+                                Intent myIntent = new Intent(LogInActivity.this, GoogleUserRegisterActivity.class);
+                                startActivity(myIntent);
 
                             }
 

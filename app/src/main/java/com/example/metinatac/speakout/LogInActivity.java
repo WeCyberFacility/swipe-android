@@ -169,13 +169,11 @@ public class LogInActivity extends AppCompatActivity {
         //  mGoogleApiClient.connect(); // <- Verursacht FEHLER (Crash)
 
 
-        if (currentUser != null ) {
-            checkObExistiert();
 
 
             //startActivity(getIntent())
 
-        }
+
 
     }
 
@@ -216,7 +214,7 @@ public class LogInActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "signInWithCredential: success");
                             // updateUI(user);
-                            finish();
+
                             //   startActivity(getIntent());
 
                             checkObExistiert();
@@ -275,6 +273,7 @@ public class LogInActivity extends AppCompatActivity {
 
 
                     Intent myIntent = new Intent(LogInActivity.this, HomeActivity.class);
+                    finish();
                     startActivity(myIntent);
 
 
@@ -284,6 +283,7 @@ public class LogInActivity extends AppCompatActivity {
 
 
                     Intent myIntent = new Intent(LogInActivity.this, GoogleUserRegisterActivity.class);
+                 finish();
                     startActivity(myIntent);
 
                 }

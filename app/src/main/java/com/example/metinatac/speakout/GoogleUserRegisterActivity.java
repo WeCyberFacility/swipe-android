@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -16,21 +17,24 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class GoogleUserRegisterActivity extends AppCompatActivity {
-
-
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    final DatabaseReference myRef = database.getReference("Nutzer");
-
+// TODO: enn man die aPP bei dieser Activity komplett schließt, soll der user, der nicht in der Datenbank eingetragen ist ausgeloggt werden.
 
     private GoogleSignInClient mGoogleSingInclient;
     private FirebaseAuth mAuth;
-   private Button weiter;
-   private EditText uname ;
-   FirebaseUser user;
+    private Button weiter;
+    private EditText uname;
+    FirebaseUser user;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference("Nutzer");
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,17 +76,16 @@ public class GoogleUserRegisterActivity extends AppCompatActivity {
     }
 
 
-    public void createNewGoogleUser(View V){
-        String Name  = user.getDisplayName().trim();
+    public void createNewGoogleUser(View V) {
+        String Name = user.getDisplayName().trim();
         String Nachname = "";
-        String ID =user.getUid();
+        String ID = user.getUid();
         String userNAme = uname.getText().toString().trim();
-        String pw ="GoogleAuth".trim();
+        String pw = "GoogleAuth".trim();
         String email = user.getEmail().trim();
 
-        Nutzer neuerNutzer = new Nutzer(ID, Name, Nachname, userNAme,pw, email, 0);
+        Nutzer neuerNutzer = new Nutzer(ID, Name, Nachname, userNAme, pw, email, 0);
         myRef.child(mAuth.getCurrentUser().getUid()).child("Daten").setValue(neuerNutzer);
-
 
 
         startActivity(new Intent(GoogleUserRegisterActivity.this, HomeActivity.class));
@@ -90,27 +93,56 @@ public class GoogleUserRegisterActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
-
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         signOut();
         Intent myIntent = new Intent(GoogleUserRegisterActivity.this, LogInActivity.class);
         startActivity(myIntent);
-        finish();
 
     }
 
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mAuth.getCurrentUser()!=null) {
 
 
 
+            myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
+                        Nutzer currentUser = ds.child("Daten").getValue(Nutzer.class);
+
+                        if (currentUser.getId().equals(mAuth.getCurrentUser().getUid())) {
 
 
+                            break;
+
+
+                        } else {
+                            Toast.makeText(GoogleUserRegisterActivity.this, "Bye", Toast.LENGTH_SHORT).show();
+
+                            signOut();
+                        }
+
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }else{
+            Toast.makeText(this, "Bye", Toast.LENGTH_SHORT).show();
+        }
+
+    }
 }

@@ -52,7 +52,7 @@ public class LogInActivity extends AppCompatActivity {
     public static Nutzer eingeloggterNutzer;
 
     private FirebaseAuth mAuth;
-    boolean gefunden;
+    static boolean gefunden;
 
     private Context mCtx ;
 
@@ -194,6 +194,8 @@ public class LogInActivity extends AppCompatActivity {
             try {
 
                 GoogleSignInAccount account = task.getResult(ApiException.class);
+                GoogleUserRegisterActivity.accountRefCopy=account;
+
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
                 Log.w(TAG, "Google sign in failed", e);

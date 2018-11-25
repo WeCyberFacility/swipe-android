@@ -31,7 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class GoogleUserRegisterActivity extends AppCompatActivity {
-// TODO: Wenn man die APP bei dieser Activity komplett schließt, soll der user, der nicht in der Datenbank eingetragen ist ausgeloggt werden.
+
 
     private GoogleSignInClient mGoogleSingInclient;
     private FirebaseAuth mAuth;
@@ -91,7 +91,7 @@ public class GoogleUserRegisterActivity extends AppCompatActivity {
 
         if (uname.getText().toString().equals("")) {
 
-greet.setText("*bitte gebe einen Namen an!");
+           greet.setText("*bitte gebe einen Namen an!");
 
 
         } else {

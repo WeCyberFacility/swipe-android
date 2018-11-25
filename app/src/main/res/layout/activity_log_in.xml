@@ -140,6 +140,8 @@
         android:fontFamily="@font/annie_use_your_telescope"
         android:text="Login"
 
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwortEingabeTxt" />

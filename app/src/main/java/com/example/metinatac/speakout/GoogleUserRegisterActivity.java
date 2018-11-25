@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -42,6 +43,8 @@ public class GoogleUserRegisterActivity extends AppCompatActivity {
     DatabaseReference myRef = database.getReference("Nutzer");
     static GoogleSignInAccount accountRefCopy;
 
+    TextView greet;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +67,7 @@ public class GoogleUserRegisterActivity extends AppCompatActivity {
         user = mAuth.getCurrentUser();
         weiter = findViewById(R.id.weiterBtn);
         uname = findViewById(R.id.googleUserName);
+        greet = findViewById(R.id.greeting);
 
     }
 
@@ -84,21 +88,32 @@ public class GoogleUserRegisterActivity extends AppCompatActivity {
 
 
     public void createNewGoogleUser(View V) {
-        String Name = user.getDisplayName().trim();
-        String Nachname = "";
-        String ID = user.getUid();
-        String userNAme = uname.getText().toString().trim();
-        String pw = "GoogleAuth".trim();
-        String email = user.getEmail().trim();
 
-        Nutzer neuerNutzer = new Nutzer(ID, Name, Nachname, userNAme, pw, email, 0);
-        myRef.child(mAuth.getCurrentUser().getUid()).child("Daten").setValue(neuerNutzer);
+        if (uname.getText().toString().equals("")) {
+
+greet.setText("*bitte gebe einen Namen an!");
 
 
-        startActivity(new Intent(GoogleUserRegisterActivity.this, HomeActivity.class));
-        finish();
+        } else {
+
+
+            LogInActivity.gefunden = true;
+
+            String Name = user.getDisplayName().trim();
+            String Nachname = "";
+            String ID = user.getUid();
+            String userNAme = uname.getText().toString().trim();
+            String pw = "GoogleAuth".trim();
+            String email = user.getEmail().trim();
+
+            Nutzer neuerNutzer = new Nutzer(ID, Name, Nachname, userNAme, pw, email, 0);
+            myRef.child(mAuth.getCurrentUser().getUid()).child("Daten").setValue(neuerNutzer);
+
+
+            startActivity(new Intent(GoogleUserRegisterActivity.this, HomeActivity.class));
+            finish();
+        }
     }
-
 
     @Override
     public void onBackPressed() {

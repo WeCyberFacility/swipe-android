@@ -120,6 +120,7 @@ public class LogInActivity extends AppCompatActivity {
                 .build();
 
 
+
         mGoogleSingInclient = GoogleSignIn.getClient(this, gso);
 
 

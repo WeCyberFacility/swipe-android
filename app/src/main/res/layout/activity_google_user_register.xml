@@ -35,6 +35,7 @@
         android:ems="10"
         android:fontFamily="@font/cutive"
         android:hint="Benutzer Name"
+        android:backgroundTint="@android:color/background_light"
         android:inputType="textPersonName"
         android:text=""
         android:textAlignment="center"

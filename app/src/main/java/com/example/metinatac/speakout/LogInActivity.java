@@ -2,9 +2,12 @@ package com.example.metinatac.speakout;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -20,7 +23,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -48,23 +50,25 @@ public class LogInActivity extends AppCompatActivity {
     TextView ErrorEmpty;
     TextView neuerAccountErstellenTXT;
 
-
+    private boolean authGoogle = false;
     public static Nutzer eingeloggterNutzer;
 
     private FirebaseAuth mAuth;
     static boolean gefunden;
 
-    private Context mCtx ;
+    private AlertDialog.Builder a;
+    private Context mCtx;
 
     private FirebaseAuth.AuthStateListener mAuthListener;
     private static final String TAG = "SignInACTIVITY";
 
 
-//hi
+    //hi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+
 
         //Deklarationen der einzelnen XML Objekte
 
@@ -73,10 +77,6 @@ public class LogInActivity extends AppCompatActivity {
         passwordtxt = findViewById(R.id.passwortEingabeTxt);
         loginBtn = findViewById(R.id.loginBtnEmail);
         ErrorEmpty = findViewById(R.id.ErrorEmptyFields);
-
-
-
-
 
 
         //Buttons:
@@ -94,11 +94,6 @@ public class LogInActivity extends AppCompatActivity {
         });
 
 
-
-
-
-
-
         //Login Button für die Email Anmeldung!
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,27 +102,16 @@ public class LogInActivity extends AppCompatActivity {
                 anmelden();
 
 
-
             }
         });
 
         ImageButton signInButton = findViewById(R.id.googleBtn);
 
 
-
-
         mAuth = FirebaseAuth.getInstance();
 
         //SignInButton signInButton = findViewById(R.id.googleBtn);
         //signInButton.setSize(SignInButton.SIZE_WIDE);
-
-
-
-
-
-
-
-
 
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -169,10 +153,7 @@ public class LogInActivity extends AppCompatActivity {
         //  mGoogleApiClient.connect(); // <- Verursacht FEHLER (Crash)
 
 
-
-
-            //startActivity(getIntent())
-
+        //startActivity(getIntent())
 
 
     }
@@ -194,7 +175,7 @@ public class LogInActivity extends AppCompatActivity {
             try {
 
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                GoogleUserRegisterActivity.accountRefCopy=account;
+                GoogleUserRegisterActivity.accountRefCopy = account;
 
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
@@ -211,6 +192,8 @@ public class LogInActivity extends AppCompatActivity {
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+
+
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -218,19 +201,60 @@ public class LogInActivity extends AppCompatActivity {
                             // updateUI(user);
 
                             //   startActivity(getIntent());
-
+                            authGoogle = true;
                             checkObExistiert();
 
 
+                            Toast.makeText(getApplicationContext(), "Willkommen", Toast.LENGTH_SHORT).show();
 
                         } else {
+                            Toast.makeText(getApplicationContext(), "Auth failed!", Toast.LENGTH_SHORT).show();
+
                             Log.w(TAG, "signInWithCredential: failed", task.getException());
-                        Toast.makeText(getApplicationContext(), "Auth failed!", Toast.LENGTH_SHORT).show();
+
 
                             // updateUI(null);
                         }
                     }
                 });
+
+        Handler handler;
+        handler = new Handler();
+        handler.postDelayed(new Runnable() {
+
+
+            @Override
+            public void run() {
+
+                if (authGoogle == false) {
+                    Toast.makeText(getApplicationContext(), "Auth failed!", Toast.LENGTH_SHORT).show();
+                    getAlert();
+
+                }
+            }
+        }, 2000);
+
+
+    }
+
+
+    public void getAlert() {
+
+        AlertDialog.Builder fehler = new AlertDialog.Builder(LogInActivity.this);
+        fehler.setMessage("Benutzerkonto ist gesperrt!")
+
+
+                .setNegativeButton("Schließen", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        signOut();
+                    }
+                }).setCancelable(false);
+
+
+        AlertDialog dialog = fehler.create();
+
+        dialog.show();
 
     }
 
@@ -248,13 +272,13 @@ public class LogInActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
-                for(DataSnapshot ds: dataSnapshot.getChildren()) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
                     Nutzer currentUser = ds.child("Daten").getValue(Nutzer.class);
 
-                    if(currentUser.getId().equals(mAuth.getCurrentUser().getUid())) {
+                    if (currentUser.getId().equals(mAuth.getCurrentUser().getUid())) {
 
-                        Toast.makeText(LogInActivity.this, "User gefunden!", Toast.LENGTH_SHORT).show();
+
                         gefunden = true;
 
                         break;
@@ -267,29 +291,22 @@ public class LogInActivity extends AppCompatActivity {
                     }
 
 
-
                 }
 
-                if(gefunden == true) {
-
+                if (gefunden == true) {
 
 
                     Intent myIntent = new Intent(LogInActivity.this, HomeActivity.class);
                     finish();
                     startActivity(myIntent);
 
-
                 } else {
 
-                    Toast.makeText(LogInActivity.this, "User in der Datenbank nicht gefunden", Toast.LENGTH_SHORT).show();
-
-
                     Intent myIntent = new Intent(LogInActivity.this, GoogleUserRegisterActivity.class);
-                 finish();
+                    finish();
                     startActivity(myIntent);
 
                 }
-
 
 
             }
@@ -299,10 +316,6 @@ public class LogInActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-
 
 
     }
@@ -358,30 +371,29 @@ public class LogInActivity extends AppCompatActivity {
     }
 
 
-
     public void anmelden() {
 
         //Hi
         final String emailEingabe = emailtxt.getText().toString().trim();
-        String passwortEingabe =passwordtxt.getText().toString().trim();
+        String passwortEingabe = passwordtxt.getText().toString().trim();
 
-Log.d(TAG,passwortEingabe);
-        if(emailEingabe.equals("") || passwortEingabe.equals("")) {
+        Log.d(TAG, passwortEingabe);
+        if (emailEingabe.equals("") || passwortEingabe.equals("")) {
 
-         //   Toast.makeText(mCtx, "Bitte fülle alle Felder aus!", Toast.LENGTH_SHORT).show();
+            //   Toast.makeText(mCtx, "Bitte fülle alle Felder aus!", Toast.LENGTH_SHORT).show();
 
-ErrorEmpty.setText("*Bitte Felder ausfüllen!");
+            ErrorEmpty.setText("*Bitte Felder ausfüllen!");
         } else {
 
 
-            mAuth.signInWithEmailAndPassword(emailEingabe,passwortEingabe )
+            mAuth.signInWithEmailAndPassword(emailEingabe, passwortEingabe)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d(TAG, "signInWithEmail:success");
-                    //            Toast.makeText(mCtx, "Login Erfolgreich", Toast.LENGTH_SHORT).show();
+                                //            Toast.makeText(mCtx, "Login Erfolgreich", Toast.LENGTH_SHORT).show();
                                 FirebaseUser user = mAuth.getCurrentUser();
 
                                 HomeActivity.emailLogin = true;
@@ -389,7 +401,7 @@ ErrorEmpty.setText("*Bitte Felder ausfüllen!");
 
                                 Intent myIntent = new Intent(LogInActivity.this, HomeActivity.class);
                                 startActivity(myIntent);
-finish();
+                                finish();
 
 
                             } else {
@@ -397,8 +409,8 @@ finish();
                                 ErrorEmpty.setText("*E-Mail oder Passwort falsch!");
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
-                           //     Toast.makeText(mCtx, "Email oder Password falsch!",
-                             //           Toast.LENGTH_SHORT).show();
+                                //     Toast.makeText(mCtx, "Email oder Password falsch!",
+                                //           Toast.LENGTH_SHORT).show();
 
                             }
 
@@ -407,8 +419,6 @@ finish();
                     });
 
         }
-
-
 
 
     }

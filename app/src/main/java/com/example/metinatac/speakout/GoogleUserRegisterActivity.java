@@ -91,7 +91,7 @@ public class GoogleUserRegisterActivity extends AppCompatActivity {
 
         if (uname.getText().toString().equals("")) {
 
-           greet.setText("*bitte gebe einen Namen an!");
+            greet.setText("*bitte gebe einen Namen an!");
 
 
         } else {
@@ -127,20 +127,20 @@ public class GoogleUserRegisterActivity extends AppCompatActivity {
 
     @Override
     public void onPause() {
-super.onPause();
+        super.onPause();
 
-        if(!LogInActivity.gefunden)
-         signOut();
-     }
-@Override
-public void onResume()
-{
-super.onResume();
-   if(mAuth.getCurrentUser()==null) {
-       Intent myIntent = new Intent(GoogleUserRegisterActivity.this, LogInActivity.class);
-       startActivity(myIntent);
-       super.onResume();
-       finish();
-   }
-}
+        if (!LogInActivity.gefunden)
+            signOut();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mAuth.getCurrentUser() == null) {
+            Intent myIntent = new Intent(GoogleUserRegisterActivity.this, LogInActivity.class);
+            startActivity(myIntent);
+            super.onResume();
+            finish();
+        }
+    }
 }

@@ -14,56 +14,53 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LaunchActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSingInclient;
     private FirebaseAuth mAuth;
-        Handler handler;
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
+    Handler handler;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
 
-            mAuth = FirebaseAuth.getInstance();
-            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken(getString(R.string.default_web_client_id))
-                    .requestEmail()
-                    .build();
+        mAuth = FirebaseAuth.getInstance();
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
 
 
-            mGoogleSingInclient = GoogleSignIn.getClient(this, gso);
+        mGoogleSingInclient = GoogleSignIn.getClient(this, gso);
 
 
-            setContentView(R.layout.activity_launch);
+        setContentView(R.layout.activity_launch);
 
-            handler=new Handler();
-            handler.postDelayed(new Runnable() {
-
-
+        handler = new Handler();
+        handler.postDelayed(new Runnable() {
 
 
-                @Override
-                public void run() {
+            @Override
+            public void run() {
 
-                   if(mAuth.getCurrentUser()==null){
-                       Intent intent=new Intent(LaunchActivity.this,LogInActivity.class);
-                       startActivity(intent);
+                if (mAuth.getCurrentUser() == null) {
+                    Intent intent = new Intent(LaunchActivity.this, LogInActivity.class);
+                    startActivity(intent);
 
-                       finish();
+                    finish();
 
-                   }else{
-                       Intent intent=new Intent(LaunchActivity.this,HomeActivity.class);
-                       startActivity(intent);
+                } else {
+                    Intent intent = new Intent(LaunchActivity.this, HomeActivity.class);
+                    startActivity(intent);
 
-                       finish();
-                   }
-
-
-
-
+                    finish();
                 }
-            },1500);
 
-        }
 
+            }
+        }, 1500);
 
     }
+
+
+}
 
 
 

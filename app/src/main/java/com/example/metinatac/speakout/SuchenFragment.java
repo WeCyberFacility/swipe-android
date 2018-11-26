@@ -16,9 +16,6 @@ public class SuchenFragment extends Fragment {
         View view = inflater.inflate(R.layout.suchenfragment_layout, container, false);
 
 
-
-
-
         return view;
     }
 }

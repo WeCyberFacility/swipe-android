@@ -3,7 +3,7 @@
     <color name="colorPrimary"> #b00d41 </color>
     <color name="colorPrimaryDark">#b00d41
     </color>
-    <color name="colorAccent">#ffffff</color>
+    <color name="colorAccent">#da6767</color>
     <color name="navigationBarColor"> #b00d41</color>
 
     <color name="black_overlay">#66000000</color>

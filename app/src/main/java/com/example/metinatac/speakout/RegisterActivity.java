@@ -30,7 +30,6 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,8 +43,8 @@ public class RegisterActivity extends AppCompatActivity {
         registerbtn = findViewById(R.id.registerBtn);
         benutzernameEingabe = findViewById(R.id.RegisterBenutzername);
         mAuth = FirebaseAuth.getInstance();
-        
-        
+
+
         registerbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,26 +56,25 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
 
-
     }
 
-    public static String verschluesselPW(String inputPW){
+    public static String verschluesselPW(String inputPW) {
 
-       int count=0;
+        int count = 0;
 
         String hashedPW;
 
         String allChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,.-öäü";
 
-        String doubleAllChars= "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,.-öäü" +
-                               "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,.-öäü"+
-                               "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,.-öäü";
+        String doubleAllChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,.-öäü" +
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,.-öäü" +
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,.-öäü";
 
 
         char[] hashedChars = new char[inputPW.length()];
 
 
-        for(int i =0;i<inputPW.length();i++) {
+        for (int i = 0; i < inputPW.length(); i++) {
 
             for (int j = 0; j < allChars.length(); j++) {
 
@@ -106,15 +104,11 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
 
-       hashedPW= String.valueOf(hashedChars);
-               Log.d(TAG,hashedPW);
+        hashedPW = String.valueOf(hashedChars);
+        Log.d(TAG, hashedPW);
 
         return hashedPW;
     }
-
-
-
-
 
 
     public void registrieren() {
@@ -124,12 +118,12 @@ public class RegisterActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("Nutzer");
 
-        if(     nameEingabe.getText().toString().equals("") == true ||
+        if (nameEingabe.getText().toString().equals("") == true ||
                 nachnameEingabe.getText().toString().equals("") == true ||
                 emailEingabe.getText().toString().equals("") == true ||
                 passwortEingabe.getText().toString().equals("") == true ||
                 passwortRepeatEingabe.getText().toString().equals("") == true ||
-                benutzernameEingabe.getText().toString().equals("") == true ) {
+                benutzernameEingabe.getText().toString().equals("") == true) {
 
             //wenn eins der Felder leer sein sollte, so gebe eine Fehlermeldung aus!
 
@@ -144,22 +138,18 @@ public class RegisterActivity extends AppCompatActivity {
             final String benutzernameeingabe = benutzernameEingabe.getText().toString().trim();
             final String passworteingabe = passwortEingabe.getText().toString().trim();
             String passworteingaberepeat = passwortRepeatEingabe.getText().toString().trim();
-            
-            if(passworteingabe.equals(passworteingaberepeat) == false) {
+
+            if (passworteingabe.equals(passworteingaberepeat) == false) {
 
                 Toast.makeText(this, "Die eingegebenen Passwörter stimmen nicht überein!", Toast.LENGTH_SHORT).show();
-                
+
             } else {
 
 
-
-
-                
-                
                 mAuth.createUserWithEmailAndPassword(emaileingabe, passworteingabe).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        
+
                         if (task.isSuccessful()) {
 
                             Intent myIntent = new Intent(RegisterActivity.this, HomeActivity.class);
@@ -169,43 +159,35 @@ public class RegisterActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
 
 
-
                             Nutzer neuerNutzer = new Nutzer(mAuth.getCurrentUser().getUid(), nameeingabe, nachnameeingabe, benutzernameeingabe, verschluesselPW(passworteingabe), emaileingabe, 0);
                             myRef.child(mAuth.getCurrentUser().getUid()).child("Daten").setValue(neuerNutzer);
-
-
 
 
                         } else {
 
                             Toast.makeText(RegisterActivity.this, "Registrierung Fehlgeschlagen!", Toast.LENGTH_SHORT).show();
-                            
+
                         }
 
 
-
-                        
                     }
                 });
 
 
-               // String idd = myRef.push().getKey();
+                // String idd = myRef.push().getKey();
 
-                
+
             }
-
-          
 
 
         }
 
 
-
     }
 
 
-    private String entschluesselPW(String PW){
-        int count=0;
+    private String entschluesselPW(String PW) {
+        int count = 0;
 
         String hashedPW;
 
@@ -213,24 +195,24 @@ public class RegisterActivity extends AppCompatActivity {
 
         String reversedAll = new StringBuilder(allChars).reverse().toString();
 
-        String doubleAllChars= "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,.-öäü" +
-                               "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,.-öäü"+
-                               "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,.-öäü";
+        String doubleAllChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,.-öäü" +
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,.-öäü" +
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,.-öäü";
 
         String reversedDoubleAll = new StringBuilder(doubleAllChars).reverse().toString();
 
         char[] hashedChars = new char[PW.length()];
 
 
-        for(int i =0;i<PW.length();i++) {
+        for (int i = 0; i < PW.length(); i++) {
 
-            for (int j = 0; j <  reversedAll.length(); j++) {
+            for (int j = 0; j < reversedAll.length(); j++) {
 
 
-                if (PW.charAt(i) ==  reversedAll.charAt(j)) {
+                if (PW.charAt(i) == reversedAll.charAt(j)) {
 
                     if (i % 2 == 0) {
-                        hashedChars[i] =reversedDoubleAll.charAt(i + j + 8);
+                        hashedChars[i] = reversedDoubleAll.charAt(i + j + 8);
                         break;
                     } else {
                         hashedChars[i] = reversedDoubleAll.charAt(i + j + 4);
@@ -252,13 +234,11 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
 
-        hashedPW= String.valueOf(hashedChars);
-        Log.d(TAG,hashedPW);
+        hashedPW = String.valueOf(hashedChars);
+        Log.d(TAG, hashedPW);
 
         return hashedPW;
     }
-
-
 
 
 }

@@ -48,11 +48,10 @@ public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
-
     private GoogleSignInClient mGoogleSingInclient;
     private FirebaseAuth mAuth;
     Button logout;
-    ImageView  drawerPb;
+    ImageView drawerPb;
     TextView userName;
 
     static FirebaseUser currentUserAngemeldet;
@@ -62,15 +61,14 @@ public class HomeActivity extends AppCompatActivity
     View headerView;
 
 
-
     private static final String TAG = "SignInACTIVITY";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -87,18 +85,14 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
 
 
-
         headerView = navigationView.getHeaderView(0);
         userName = headerView.findViewById(R.id.nametxt);
         drawerPb = headerView.findViewById(R.id.drawerpb);
 
 
-
-
-        if(emailLogin == true) {
+        if (emailLogin == true) {
 
             nutzerFinden();
-
 
 
             getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer,
@@ -116,10 +110,7 @@ public class HomeActivity extends AppCompatActivity
             navigationView.setNavigationItemSelectedListener(this);
 
 
-
-
         } else {
-
 
 
             userName.setText(currentUser.getDisplayName());
@@ -147,12 +138,6 @@ public class HomeActivity extends AppCompatActivity
         }
 
 
-
-
-
-
-
-
     }
 
     private void nutzerFinden() {
@@ -161,26 +146,23 @@ public class HomeActivity extends AppCompatActivity
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Nutzer");
 
-       myRef = myRef.child(currentUserAngemeldet.getUid()).child("Daten");
-       myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-           @Override
-           public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        myRef = myRef.child(currentUserAngemeldet.getUid()).child("Daten");
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
-               currentNutzer = dataSnapshot.getValue(Nutzer.class);
-               userName.setText(currentNutzer.getUsername());
+                currentNutzer = dataSnapshot.getValue(Nutzer.class);
+                userName.setText(currentNutzer.getUsername());
 
 
-           }
+            }
 
-           @Override
-           public void onCancelled(@NonNull DatabaseError databaseError) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-           }
-       });
-
-
-
+            }
+        });
 
 
     }
@@ -189,18 +171,18 @@ public class HomeActivity extends AppCompatActivity
 
         super.onStart();
 
-NavigationView nav = findViewById(R.id.nav_view);
+        NavigationView nav = findViewById(R.id.nav_view);
 
-  logout = nav.findViewById(R.id.logout);
+        logout = nav.findViewById(R.id.logout);
 
-logout.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        signOut();
-        finish();
-        startActivity(new Intent(HomeActivity.this, LogInActivity.class));
-    }
-});
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signOut();
+                finish();
+                startActivity(new Intent(HomeActivity.this, LogInActivity.class));
+            }
+        });
         /*   String userName = currentUser.getDisplayName();
             Toast.makeText(this, "Willkommen "+userName, Toast.LENGTH_SHORT).show();
             String username = currentUser.getDisplayName();
@@ -235,14 +217,11 @@ logout.setOnClickListener(new View.OnClickListener() {
                     new ProfilFragment()).commit();
 
 
-
-
         } else if (id == R.id.suchen) {
             //Was passiert wenn man SUCHEN im Drawer drückt
 
             getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer,
                     new SuchenFragment()).commit();
-
 
 
         } else if (id == R.id.einstellungen) {
@@ -252,14 +231,11 @@ logout.setOnClickListener(new View.OnClickListener() {
                     new EinstellungenFragment()).commit();
 
 
-
-
         } else if (id == R.id.home) {
             //Was passiert wenn man HOME im Drawer drückt
 
             getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer,
                     new HomeFragment()).commit();
-
 
 
         }
@@ -269,10 +245,6 @@ logout.setOnClickListener(new View.OnClickListener() {
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-
-
-
 
 
     private void signOut() {
@@ -302,7 +274,6 @@ logout.setOnClickListener(new View.OnClickListener() {
                     }
                 });
     }
-
 
 
 }

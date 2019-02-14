@@ -23,7 +23,7 @@ public class Nutzer {
 
     }
 
-    public Nutzer () {
+    public Nutzer() {
 
     }
 

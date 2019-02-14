@@ -2,14 +2,18 @@ package com.example.metinatac.speakout;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +23,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,6 +32,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LogInActivity extends AppCompatActivity {
 
@@ -42,21 +50,25 @@ public class LogInActivity extends AppCompatActivity {
     TextView ErrorEmpty;
     TextView neuerAccountErstellenTXT;
 
+    private boolean authGoogle = false;
     public static Nutzer eingeloggterNutzer;
 
     private FirebaseAuth mAuth;
+    static boolean gefunden;
 
+    private AlertDialog.Builder a;
     private Context mCtx;
 
     private FirebaseAuth.AuthStateListener mAuthListener;
     private static final String TAG = "SignInACTIVITY";
 
 
-//hi
+    //hi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+
 
         //Deklarationen der einzelnen XML Objekte
 
@@ -65,10 +77,6 @@ public class LogInActivity extends AppCompatActivity {
         passwordtxt = findViewById(R.id.passwortEingabeTxt);
         loginBtn = findViewById(R.id.loginBtnEmail);
         ErrorEmpty = findViewById(R.id.ErrorEmptyFields);
-
-
-
-
 
 
         //Buttons:
@@ -86,11 +94,6 @@ public class LogInActivity extends AppCompatActivity {
         });
 
 
-
-
-
-
-
         //Login Button für die Email Anmeldung!
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,9 +102,10 @@ public class LogInActivity extends AppCompatActivity {
                 anmelden();
 
 
-
             }
         });
+
+        ImageButton signInButton = findViewById(R.id.googleBtn);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -109,21 +113,26 @@ public class LogInActivity extends AppCompatActivity {
         //SignInButton signInButton = findViewById(R.id.googleBtn);
         //signInButton.setSize(SignInButton.SIZE_WIDE);
 
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
 
+
         mGoogleSingInclient = GoogleSignIn.getClient(this, gso);
 
-       /* signInButton.setOnClickListener(new View.OnClickListener() {
+
+        signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 signIn();
 
             }
-        });*/
+        });
+
+
         Task<Void> voidTask = mGoogleSingInclient.revokeAccess()
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
@@ -143,17 +152,9 @@ public class LogInActivity extends AppCompatActivity {
 
         // updateUI(currentUser);
         //  mGoogleApiClient.connect(); // <- Verursacht FEHLER (Crash)
-        if (currentUser != null) {
-
-            startActivity(new Intent(LogInActivity.this, HomeActivity.class));
 
 
-            //startActivity(getIntent());
-
-
-
-
-        }
+        //startActivity(getIntent())
 
 
     }
@@ -175,6 +176,8 @@ public class LogInActivity extends AppCompatActivity {
             try {
 
                 GoogleSignInAccount account = task.getResult(ApiException.class);
+                GoogleUserRegisterActivity.accountRefCopy = account;
+
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
                 Log.w(TAG, "Google sign in failed", e);
@@ -190,28 +193,133 @@ public class LogInActivity extends AppCompatActivity {
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+
+
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "signInWithCredential: success");
                             // updateUI(user);
-                            finish();
+
                             //   startActivity(getIntent());
+                            authGoogle = true;
+                            checkObExistiert();
 
 
-                            Intent myIntent = new Intent(LogInActivity.this, HomeActivity.class);
-                            startActivity(myIntent);
+                            Toast.makeText(getApplicationContext(), "Willkommen", Toast.LENGTH_SHORT).show();
+
                         } else {
+                            Toast.makeText(getApplicationContext(), "Auth failed!", Toast.LENGTH_SHORT).show();
+
                             Log.w(TAG, "signInWithCredential: failed", task.getException());
-                        Toast.makeText(getApplicationContext(), "Auth failed!", Toast.LENGTH_SHORT).show();
+
 
                             // updateUI(null);
                         }
                     }
                 });
 
+        Handler handler;
+        handler = new Handler();
+        handler.postDelayed(new Runnable() {
+
+
+            @Override
+            public void run() {
+
+                if (authGoogle == false) {
+                    Toast.makeText(getApplicationContext(), "Auth failed!", Toast.LENGTH_SHORT).show();
+                    getAlert();
+
+                }
+            }
+        }, 2000);
+
+
     }
 
+
+    public void getAlert() {
+
+        AlertDialog.Builder fehler = new AlertDialog.Builder(LogInActivity.this);
+        fehler.setMessage("Benutzerkonto ist gesperrt!")
+
+
+                .setNegativeButton("Schließen", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        signOut();
+                    }
+                }).setCancelable(false);
+
+
+        AlertDialog dialog = fehler.create();
+
+        dialog.show();
+
+    }
+
+
+    public void checkObExistiert() {
+
+        gefunden = false;
+
+        // Write a message to the database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Nutzer");
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
+                    Nutzer currentUser = ds.child("Daten").getValue(Nutzer.class);
+
+                    if (currentUser.getId().equals(mAuth.getCurrentUser().getUid())) {
+
+
+                        gefunden = true;
+
+                        break;
+
+
+                    } else {
+
+                        continue;
+
+                    }
+
+
+                }
+
+                if (gefunden == true) {
+
+
+                    Intent myIntent = new Intent(LogInActivity.this, HomeActivity.class);
+                    finish();
+                    startActivity(myIntent);
+
+                } else {
+
+                    Intent myIntent = new Intent(LogInActivity.this, GoogleUserRegisterActivity.class);
+                    finish();
+                    startActivity(myIntent);
+
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
 
     private void handleSignInresult(GoogleSignInResult result) {
         Log.d(TAG, "handleSignInResult" + result.isSuccess());
@@ -237,6 +345,7 @@ public class LogInActivity extends AppCompatActivity {
     private void signOut() {
         // Firebase sign out
         mAuth.signOut();
+        HomeActivity.emailLogin = false;
 
         // Google sign out
         mGoogleSingInclient.signOut().addOnCompleteListener(this,
@@ -263,35 +372,37 @@ public class LogInActivity extends AppCompatActivity {
     }
 
 
-
     public void anmelden() {
 
         //Hi
-        String emailEingabe = emailtxt.getText().toString().trim();
-        String passwortEingabe =passwordtxt.getText().toString().trim();
+        final String emailEingabe = emailtxt.getText().toString().trim();
+        String passwortEingabe = passwordtxt.getText().toString().trim();
 
-Log.d(TAG,passwortEingabe);
-        if(emailEingabe.equals("") || passwortEingabe.equals("")) {
+        Log.d(TAG, passwortEingabe);
+        if (emailEingabe.equals("") || passwortEingabe.equals("")) {
 
-         //   Toast.makeText(mCtx, "Bitte fülle alle Felder aus!", Toast.LENGTH_SHORT).show();
+            //   Toast.makeText(mCtx, "Bitte fülle alle Felder aus!", Toast.LENGTH_SHORT).show();
 
-ErrorEmpty.setText("*Bitte Felder ausfüllen!");
+            ErrorEmpty.setText("*Bitte Felder ausfüllen!");
         } else {
 
 
-            mAuth.signInWithEmailAndPassword(emailEingabe,passwortEingabe )
+            mAuth.signInWithEmailAndPassword(emailEingabe, passwortEingabe)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d(TAG, "signInWithEmail:success");
-                                Toast.makeText(mCtx, "Login Erfolgreich", Toast.LENGTH_SHORT).show();
+                                //            Toast.makeText(mCtx, "Login Erfolgreich", Toast.LENGTH_SHORT).show();
                                 FirebaseUser user = mAuth.getCurrentUser();
+
+                                HomeActivity.emailLogin = true;
+                                HomeActivity.currentUserAngemeldet = mAuth.getCurrentUser();
 
                                 Intent myIntent = new Intent(LogInActivity.this, HomeActivity.class);
                                 startActivity(myIntent);
-finish();
+                                finish();
 
 
                             } else {
@@ -299,8 +410,8 @@ finish();
                                 ErrorEmpty.setText("*E-Mail oder Passwort falsch!");
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                Toast.makeText(mCtx, "Email oder Password falsch!",
-                                        Toast.LENGTH_SHORT).show();
+                                //     Toast.makeText(mCtx, "Email oder Password falsch!",
+                                //           Toast.LENGTH_SHORT).show();
 
                             }
 
@@ -309,8 +420,6 @@ finish();
                     });
 
         }
-
-
 
 
     }

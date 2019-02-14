@@ -159,7 +159,7 @@ public class RegisterActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
 
 
-                            Nutzer neuerNutzer = new Nutzer(mAuth.getCurrentUser().getUid(), nameeingabe, nachnameeingabe, benutzernameeingabe, verschluesselPW(passworteingabe), emaileingabe, 0);
+                            Nutzer neuerNutzer = new Nutzer(mAuth.getCurrentUser().getUid(), nameeingabe, nachnameeingabe, benutzernameeingabe, verschluesselPW(passworteingabe), emaileingabe, 0, "");
                             myRef.child(mAuth.getCurrentUser().getUid()).child("Daten").setValue(neuerNutzer);
 
 

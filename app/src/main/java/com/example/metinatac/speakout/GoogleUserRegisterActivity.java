@@ -105,8 +105,9 @@ public class GoogleUserRegisterActivity extends AppCompatActivity {
             String userNAme = uname.getText().toString().trim();
             String pw = "GoogleAuth".trim();
             String email = user.getEmail().trim();
+            String photourl = user.getPhotoUrl().toString();
 
-            Nutzer neuerNutzer = new Nutzer(ID, Name, Nachname, userNAme, pw, email, 0);
+            Nutzer neuerNutzer = new Nutzer(ID, Name, Nachname, userNAme, pw, email, 0, photourl);
             myRef.child(mAuth.getCurrentUser().getUid()).child("Daten").setValue(neuerNutzer);
 
 

@@ -56,7 +56,7 @@ public class HomeActivity extends AppCompatActivity
 
     static FirebaseUser currentUserAngemeldet;
     static boolean emailLogin;
-    Nutzer currentNutzer;
+    static Nutzer currentNutzer;
 
     View headerView;
 
@@ -82,6 +82,7 @@ public class HomeActivity extends AppCompatActivity
         mAuth = FirebaseAuth.getInstance();
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        currentUserAngemeldet = currentUser;
         NavigationView navigationView = findViewById(R.id.nav_view);
 
 
@@ -90,7 +91,7 @@ public class HomeActivity extends AppCompatActivity
         drawerPb = headerView.findViewById(R.id.drawerpb);
 
 
-        if (emailLogin == true) {
+
 
             nutzerFinden();
 
@@ -110,32 +111,13 @@ public class HomeActivity extends AppCompatActivity
             navigationView.setNavigationItemSelectedListener(this);
 
 
-        } else {
 
 
-            userName.setText(currentUser.getDisplayName());
 
-
-            getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer,
-                    new HomeFragment()).commit();
-
-            navigationView.setCheckedItem(R.id.home);
-
-            DrawerLayout drawer = findViewById(R.id.drawer_layout);
-            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-            drawer.addDrawerListener(toggle);
-            toggle.syncState();
-
-
-            navigationView.setNavigationItemSelectedListener(this);
-
-            Uri profilePicture = currentUser.getPhotoUrl();
+           /* Uri profilePicture = currentUser.getPhotoUrl();
 
             Picasso.get().load(profilePicture).transform(new CropCircleTransformation()).into(drawerPb);
-
-
-        }
+*/
 
 
     }
@@ -154,6 +136,17 @@ public class HomeActivity extends AppCompatActivity
 
                 currentNutzer = dataSnapshot.getValue(Nutzer.class);
                 userName.setText(currentNutzer.getUsername());
+
+                if(currentNutzer.getPhotourl().equals("")) {
+
+
+
+
+                } else {
+
+                    Picasso.get().load(currentNutzer.getPhotourl()).transform(new CropCircleTransformation()).into(drawerPb);
+
+                }
 
 
             }

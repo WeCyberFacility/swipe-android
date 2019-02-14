@@ -9,8 +9,9 @@ public class Nutzer {
     private String password;
     private String email;
     private int follower;
+    private String photourl;
 
-    public Nutzer(String id, String name, String nachname, String username, String password, String email, int follower) {
+    public Nutzer(String id, String name, String nachname, String username, String password, String email, int follower, String photourl) {
 
         this.id = id;
         this.name = name;
@@ -19,6 +20,7 @@ public class Nutzer {
         this.password = password;
         this.email = email;
         this.follower = follower;
+        this.photourl = photourl;
 
 
     }
@@ -82,5 +84,13 @@ public class Nutzer {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhotourl() {
+        return photourl;
+    }
+
+    public void setPhotourl(String photourl) {
+        this.photourl = photourl;
     }
 }

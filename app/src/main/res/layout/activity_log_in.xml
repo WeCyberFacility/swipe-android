@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-   android:background="@color/colorAccent"
+   android:background="@color/backgroundblue"
     android:fitsSystemWindows="true"
     tools:context=".LogInActivity">
 
@@ -12,36 +12,29 @@
         android:id="@+id/googleBtn"
         android:layout_width="52dp"
         android:layout_height="53dp"
-        android:layout_marginBottom="49dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/shapeothercolor"
         android:fadingEdge="none|horizontal|vertical"
         android:src="@mipmap/logingooglebtn"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/oderTxt"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/oderTxt" />
 
     <TextView
         android:id="@+id/oderTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="31dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="14dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="or"
         android:textColor="@android:color/white"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/googleBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/neuerAccountTxt"
-        app:layout_constraintVertical_bias="0.51" />
+        app:layout_constraintTop_toBottomOf="@+id/neuerAccountTxt" />
 
     <TextView
         android:id="@+id/weiterBtn"
@@ -64,23 +57,22 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
 
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@android:color/background_light"
         android:ems="10"
         android:fontFamily="@font/annie_use_your_telescope"
         android:hint="E-Mail"
         android:inputType="textPersonName"
         android:text=""
+
         android:textColor="@android:color/white"
         android:textColorHint="@android:color/white"
-
         android:textColorLink="@android:color/background_light"
         android:textSize="24sp"
-        android:backgroundTint="@android:color/background_light"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weiterBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/ErrorEmptyFields" />
 
     <EditText
         android:id="@+id/passwortEingabeTxt"
@@ -122,16 +114,16 @@
 
     <ImageView
         android:id="@+id/logoSwipe"
-        android:layout_width="293dp"
-        android:layout_height="129dp"
+        android:layout_width="238dp"
+        android:layout_height="209dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="24dp"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/teddbearschrift" />
+        app:srcCompat="@mipmap/swipenewlogo" />
 
     <Button
         android:id="@+id/loginBtnEmail"
@@ -154,14 +146,13 @@
         android:id="@+id/ErrorEmptyFields"
         android:layout_width="242dp"
         android:layout_height="24dp"
-        android:layout_marginBottom="9dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/emailEingabetxt"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/weiterBtn" />
 

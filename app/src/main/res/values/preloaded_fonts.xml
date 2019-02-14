@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="preloaded_fonts" translatable="false">
+        <item>@font/abhaya_libre</item>
         <item>@font/advent_pro_thin</item>
         <item>@font/annie_use_your_telescope</item>
+        <item>@font/arimo</item>
         <item>@font/autour_one</item>
         <item>@font/cutive</item>
     </array>

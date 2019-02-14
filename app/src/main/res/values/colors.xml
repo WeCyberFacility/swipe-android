@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary"> #b00d41 </color>
-    <color name="colorPrimaryDark">#b00d41
-    </color>
-    <color name="colorAccent">#da6767</color>
-    <color name="navigationBarColor"> #b00d41</color>
+    <color name="colorPrimary">#8cb3b1</color>
+    <color name="colorPrimaryDark">#b7c9c9</color>
+    <color name="colorAccent">#acacac</color>
+    <color name="navigationBarColor">#aeaeae</color>
 
     <color name="black_overlay">#66000000</color>
+    <color name="backgroundblue">#98AEE8</color>
 
 </resources>

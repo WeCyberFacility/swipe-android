@@ -37,7 +37,7 @@
             android:backgroundTint="@android:color/white"
             android:gravity="center"
             android:text="@string/abmelden"
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/backgroundblue" />
     </LinearLayout>
 
     </android.support.design.widget.NavigationView>

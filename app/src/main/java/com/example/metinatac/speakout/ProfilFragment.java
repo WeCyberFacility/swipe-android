@@ -45,7 +45,7 @@ public class ProfilFragment extends Fragment {
             } else {
 
                 Picasso.get().load(HomeActivity.currentNutzer.getPhotourl()).transform(new CropCircleTransformation()).into(profilbild_PF);
-                Toast.makeText(getContext(), "Email Profil geladen!", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getContext(), "Email Profil geladen!", Toast.LENGTH_SHORT).show();
 
             }
 

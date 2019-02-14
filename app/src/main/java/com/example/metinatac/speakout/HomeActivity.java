@@ -1,6 +1,7 @@
 package com.example.metinatac.speakout;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.nfc.Tag;
 import android.os.Bundle;
@@ -20,6 +21,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -54,9 +57,14 @@ public class HomeActivity extends AppCompatActivity
     ImageView drawerPb;
     TextView userName;
 
+    MediaPlayer mediaPlayer;
+
     static FirebaseUser currentUserAngemeldet;
     static boolean emailLogin;
     static Nutzer currentNutzer;
+
+    ImageView bellBtn;
+    ImageView msgBtn;
 
     View headerView;
 
@@ -68,7 +76,10 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        bellBtn = findViewById(R.id.bellbtn);
+        msgBtn = findViewById(R.id.msgbtn);
         setSupportActionBar(toolbar);
+
 
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -89,6 +100,23 @@ public class HomeActivity extends AppCompatActivity
         headerView = navigationView.getHeaderView(0);
         userName = headerView.findViewById(R.id.nametxt);
         drawerPb = headerView.findViewById(R.id.drawerpb);
+
+        bellBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                mediaPlayer = MediaPlayer.create(getApplicationContext(),R.raw.bellsound);
+
+                mediaPlayer.start();
+
+                Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+                bellBtn.startAnimation(shake);
+
+            }
+        });
+
+
 
 
 
@@ -119,6 +147,18 @@ public class HomeActivity extends AppCompatActivity
             Picasso.get().load(profilePicture).transform(new CropCircleTransformation()).into(drawerPb);
 */
 
+
+    }
+
+
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mediaPlayer.stop();
+        mediaPlayer.seekTo(0);
+        mediaPlayer.release();
 
     }
 

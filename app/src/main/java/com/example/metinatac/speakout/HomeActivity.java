@@ -57,7 +57,7 @@ public class HomeActivity extends AppCompatActivity
     ImageView drawerPb;
     TextView userName;
 
-    MediaPlayer mediaPlayer;
+    MediaPlayer mediaPlayer = new MediaPlayer();
 
     static FirebaseUser currentUserAngemeldet;
     static boolean emailLogin;
@@ -80,6 +80,7 @@ public class HomeActivity extends AppCompatActivity
         msgBtn = findViewById(R.id.msgbtn);
         setSupportActionBar(toolbar);
 
+        mediaPlayer = MediaPlayer.create(getApplicationContext(),R.raw.bellsound);
 
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -117,7 +118,17 @@ public class HomeActivity extends AppCompatActivity
         });
 
 
+        msgBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+
+
+                Animation pop = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.pop);
+                msgBtn.startAnimation(pop);
+
+            }
+        });
 
 
 
@@ -262,6 +273,13 @@ public class HomeActivity extends AppCompatActivity
 
             getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer,
                     new EinstellungenFragment()).commit();
+
+
+        } else if (id == R.id.geschichten) {
+            //Was passiert wenn man EINSTELLUNGEN im Drawer drückt
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer,
+                    new GeschichtenFragment()).commit();
 
 
         } else if (id == R.id.home) {

@@ -11,6 +11,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -99,6 +101,8 @@ public class LogInActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                Animation pop = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.pop);
+                loginBtn.startAnimation(pop);
                 anmelden();
 
 

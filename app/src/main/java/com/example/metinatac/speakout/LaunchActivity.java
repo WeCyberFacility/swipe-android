@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -40,6 +41,10 @@ public class LaunchActivity extends AppCompatActivity {
             @Override
             public void run() {
 
+
+
+                //Toast.makeText(LaunchActivity.this, mAuth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
+
                 if (mAuth.getCurrentUser() == null) {
                     Intent intent = new Intent(LaunchActivity.this, LogInActivity.class);
                     startActivity(intent);
@@ -52,6 +57,8 @@ public class LaunchActivity extends AppCompatActivity {
 
                     finish();
                 }
+
+
 
 
             }

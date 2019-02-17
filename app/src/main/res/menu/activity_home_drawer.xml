@@ -15,6 +15,10 @@
             android:icon="@mipmap/profildraweicon"
             android:title="Profil" />
         <item
+            android:id="@+id/geschichten"
+            android:icon="@mipmap/notebook"
+            android:title="Geschichten" />
+        <item
             android:id="@+id/suchen"
             android:icon="@mipmap/searchdrawericon"
             android:title="Suchen"

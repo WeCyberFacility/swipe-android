@@ -7,14 +7,16 @@ public class Eigenschaft {
     private String typ;
     private String beschreibung;
     private String photourl;
+    private int hotBarometer;
 
-    public Eigenschaft(String id, String name, String typ, String beschreibung, String photourl) {
+    public Eigenschaft(String id, String name, String typ, String beschreibung, String photourl, int hotBarometer) {
 
         this.id = id;
         this.name = name;
         this.typ = typ;
         this.beschreibung = beschreibung;
         this.photourl = photourl;
+        this.hotBarometer = hotBarometer;
 
     }
 
@@ -60,5 +62,13 @@ public class Eigenschaft {
 
     public void setPhotourl(String photourl) {
         this.photourl = photourl;
+    }
+
+    public int getHotBarometer() {
+        return hotBarometer;
+    }
+
+    public void setHotBarometer(int hotBarometer) {
+        this.hotBarometer = hotBarometer;
     }
 }

@@ -8,4 +8,11 @@
     <color name="black_overlay">#66000000</color>
     <color name="backgroundblue">#98AEE8</color>
 
+    //colors für Area 51
+
+    <color name="obenlinks">#B1DCE8</color>
+    <color name="obenrechts">#A16FE8</color>
+    <color name="untenlinks">#FF6961</color>
+    <color name="untenrechts">#E8C57F</color>
+
 </resources>

@@ -15,9 +15,9 @@
             android:icon="@mipmap/profildraweicon"
             android:title="Profil" />
         <item
-            android:id="@+id/geschichten"
+            android:id="@+id/meinearea51"
             android:icon="@mipmap/notebook"
-            android:title="Geschichten" />
+            android:title="My Area 51" />
         <item
             android:id="@+id/suchen"
             android:icon="@mipmap/searchdrawericon"

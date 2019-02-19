@@ -34,7 +34,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@mipmap/applogo" />
+                app:srcCompat="@mipmap/onlylogoswipe" />
 
             <TextView
                 android:id="@+id/name_pf"
@@ -83,7 +83,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="Was macht mich einzigartig: "
+                android:text="Das macht mich aus:"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/followeranzeigenbtn" />

@@ -65,6 +65,7 @@ public class HomeActivity extends AppCompatActivity
 
     ImageView bellBtn;
     ImageView msgBtn;
+    TextView appbarName;
 
     View headerView;
 
@@ -78,9 +79,11 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         bellBtn = findViewById(R.id.bellbtn);
         msgBtn = findViewById(R.id.msgbtn);
+        appbarName = findViewById(R.id.appbarname);
         setSupportActionBar(toolbar);
 
         mediaPlayer = MediaPlayer.create(getApplicationContext(),R.raw.bellsound);
+
 
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -164,6 +167,7 @@ public class HomeActivity extends AppCompatActivity
 
 
 
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -173,6 +177,10 @@ public class HomeActivity extends AppCompatActivity
 
     }
 
+
+
+
+
     private void nutzerFinden() {
 
         // Write a message to the database
@@ -180,7 +188,7 @@ public class HomeActivity extends AppCompatActivity
         DatabaseReference myRef = database.getReference("Nutzer");
 
         myRef = myRef.child(currentUserAngemeldet.getUid()).child("Daten");
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -241,7 +249,7 @@ public class HomeActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            //super.onBackPressed();
         }
     }
 
@@ -256,6 +264,9 @@ public class HomeActivity extends AppCompatActivity
             //Was passiert wenn man PROFIL im Drawer drückt
             // Handle the camera action
 
+            appbarName.setText("Profil");
+
+            ProfilFragment.profilNutzer = currentNutzer;
 
             getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer,
                     new ProfilFragment()).commit();
@@ -264,6 +275,8 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.suchen) {
             //Was passiert wenn man SUCHEN im Drawer drückt
 
+            appbarName.setText("Suchen");
+
             getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer,
                     new SuchenFragment()).commit();
 
@@ -271,13 +284,15 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.einstellungen) {
             //Was passiert wenn man EINSTELLUNGEN im Drawer drückt
 
+            appbarName.setText("Einstellungen");
             getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer,
                     new EinstellungenFragment()).commit();
 
 
-        } else if (id == R.id.geschichten) {
+        } else if (id == R.id.meinearea51) {
             //Was passiert wenn man EINSTELLUNGEN im Drawer drückt
 
+            appbarName.setText("AREA 51");
             getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer,
                     new GeschichtenFragment()).commit();
 
@@ -285,6 +300,7 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.home) {
             //Was passiert wenn man HOME im Drawer drückt
 
+            appbarName.setText("Home");
             getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer,
                     new HomeFragment()).commit();
 
@@ -325,6 +341,10 @@ public class HomeActivity extends AppCompatActivity
                     }
                 });
     }
+
+
+
+
 
 
 }

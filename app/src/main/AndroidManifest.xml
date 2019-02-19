@@ -8,9 +8,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/appicon"
+        android:icon="@mipmap/swipelogo"
         android:label="Swipe"
-        android:roundIcon="@mipmap/appicon_round"
+        android:roundIcon="@mipmap/swipelogo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".LaunchActivity">

@@ -8,9 +8,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -26,6 +33,10 @@ public class EigenschaftenAdapter extends RecyclerView.Adapter<EigenschaftenAdap
 
     TextView nameeigenschaft_Dialog;
     TextView beschreibungeigenschaft_Dialog;
+    ImageView bildEigenschaft_Dialog;
+    TextView hotbaromater;
+    ImageView deleteBtn;
+    ImageView okBtn;
 
 
     public EigenschaftenAdapter(ArrayList<Eigenschaft> data, FragmentActivity fragmentActivity){
@@ -42,22 +53,30 @@ public class EigenschaftenAdapter extends RecyclerView.Adapter<EigenschaftenAdap
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View view = inflater.inflate(R.layout.eigenschaftenlist_layout,viewGroup , false);
 
-        eigenschaftbeschreibungsDialog = new Dialog(fragmentActivity.getApplicationContext());
+        eigenschaftbeschreibungsDialog = new Dialog(fragmentActivity);
         eigenschaftbeschreibungsDialog.setContentView(R.layout.eigenschaftsbeschreibung_layoutdialog);
 
         nameeigenschaft_Dialog = eigenschaftbeschreibungsDialog.getWindow().findViewById(R.id.nameeigenschaft_dialog);
         beschreibungeigenschaft_Dialog = eigenschaftbeschreibungsDialog.getWindow().findViewById(R.id.beschreibungeigenschaft_dialog);
+        bildEigenschaft_Dialog = eigenschaftbeschreibungsDialog.getWindow().findViewById(R.id.bildeigenschaft);
+        hotbaromater = eigenschaftbeschreibungsDialog.getWindow().findViewById(R.id.hot);
+        deleteBtn = eigenschaftbeschreibungsDialog.getWindow().findViewById(R.id.deletebtn);
+        okBtn = eigenschaftbeschreibungsDialog.getWindow().findViewById(R.id.okbtn);
+
+        eigenschaftbeschreibungsDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
 
 
         return new EigenschaftenHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull EigenschaftenHolder eigenschaftenHolder, final int i) {
+    public void onBindViewHolder(@NonNull final EigenschaftenHolder eigenschaftenHolder, final int i) {
 
 
         eigenschaftenHolder.eigenschaft_name.setText(data.get(i).getName());
         Picasso.get().load(data.get(i).getPhotourl()).transform(new CropCircleTransformation()).into(eigenschaftenHolder.eigenschafte_Bild);
+        hotbaromater.setText(String.valueOf(data.get(i).getHotBarometer()));
 
 
 
@@ -66,23 +85,136 @@ public class EigenschaftenAdapter extends RecyclerView.Adapter<EigenschaftenAdap
             @Override
             public void onClick(View view) {
 
-
+                //Animation pop = AnimationUtils.loadAnimation(fragmentActivity, R.anim.pop);
+                //eigenschaftenHolder.eigenschafte_Bild.startAnimation(pop);
 
 
                 nameeigenschaft_Dialog.setText(data.get(i).getName());
                 beschreibungeigenschaft_Dialog.setText(data.get(i).getBeschreibung());
 
+                Picasso.get().load(data.get(i).getPhotourl()).transform(new CropCircleTransformation()).into(bildEigenschaft_Dialog);
+
+
+                geaddetCheck(data.get(i));
 
                 eigenschaftbeschreibungsDialog.show();
 
             }
         });
 
+
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Animation pop = AnimationUtils.loadAnimation(fragmentActivity, R.anim.pop);
+                deleteBtn.startAnimation(pop);
+
+                StickerLoeschen(data.get(i));
+
+                eigenschaftbeschreibungsDialog.dismiss();
+
+            }
+        });
+
+
+        okBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Animation pop = AnimationUtils.loadAnimation(fragmentActivity, R.anim.pop);
+                okBtn.startAnimation(pop);
+
+                StickerAdden(data.get(i));
+
+                eigenschaftbeschreibungsDialog.dismiss();
+
+
+
+            }
+        });
+
     }
+
+
 
     @Override
     public int getItemCount() {
         return data.size();
+    }
+
+
+    //----- METHODEN -----
+
+
+    public void geaddetCheck(Eigenschaft eigenschaft){
+
+        // Write a message to the database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Nutzer");
+
+        myRef = myRef.child(HomeActivity.currentNutzer.getId()).child("Meine Sticker").child(eigenschaft.getTyp()).child(eigenschaft.getId());
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                Eigenschaft currentEigenschaft = dataSnapshot.getValue(Eigenschaft.class);
+
+
+                if(currentEigenschaft == null) {
+
+                    okBtn.setVisibility(View.VISIBLE);
+                    deleteBtn.setVisibility(View.INVISIBLE);
+
+                } else {
+
+                    okBtn.setVisibility(View.INVISIBLE);
+                    deleteBtn.setVisibility(View.VISIBLE);
+
+
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+
+    public void StickerAdden(Eigenschaft eigenschaft) {
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Nutzer");
+
+        myRef = myRef.child(HomeActivity.currentNutzer.getId()).child("Meine Sticker").child(eigenschaft.getTyp()).child(eigenschaft.getId());
+        myRef.setValue(eigenschaft);
+
+        FirebaseDatabase database2 = FirebaseDatabase.getInstance();
+        DatabaseReference myRef2 = database2.getReference("Sticker");
+        myRef2 = myRef2.child(eigenschaft.getTyp()).child(eigenschaft.getId());
+
+        Eigenschaft ueberarbeiteteEigenschaft = eigenschaft;
+        ueberarbeiteteEigenschaft.setHotBarometer(ueberarbeiteteEigenschaft.getHotBarometer() + 1);
+
+        myRef2.setValue(ueberarbeiteteEigenschaft);
+    }
+
+
+    public void StickerLoeschen(Eigenschaft eigenschaft) {
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Nutzer");
+
+        myRef = myRef.child(HomeActivity.currentNutzer.getId()).child("Meine Sticker").child(eigenschaft.getTyp()).child(eigenschaft.getId());
+
+        myRef.removeValue();
+
     }
 
 

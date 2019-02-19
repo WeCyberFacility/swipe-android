@@ -13,4 +13,15 @@
     <string name="abmelden">Abmelden</string>
     <string name="Schließen">close</string>
     <string name="cancle">Schließen</string>
+
+
+    <string-array name="StickerTypen">
+        <item>Merkmale</item>
+        <item>Artists</item>
+        <item>Games</item>
+        <item>Serien</item>
+    </string-array>
+
+
+
 </resources>

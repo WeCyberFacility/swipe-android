@@ -39,6 +39,9 @@ public class EigenschaftenAdapter extends RecyclerView.Adapter<EigenschaftenAdap
     ImageView okBtn;
 
 
+    Eigenschaft currentEigenschaft;
+
+
     public EigenschaftenAdapter(ArrayList<Eigenschaft> data, FragmentActivity fragmentActivity){
 
         this.data = data;
@@ -97,6 +100,8 @@ public class EigenschaftenAdapter extends RecyclerView.Adapter<EigenschaftenAdap
 
                 geaddetCheck(data.get(i));
 
+                currentEigenschaft = data.get(i);
+
                 eigenschaftbeschreibungsDialog.show();
 
             }
@@ -110,9 +115,11 @@ public class EigenschaftenAdapter extends RecyclerView.Adapter<EigenschaftenAdap
                 Animation pop = AnimationUtils.loadAnimation(fragmentActivity, R.anim.pop);
                 deleteBtn.startAnimation(pop);
 
-                StickerLoeschen(data.get(i));
+                StickerLoeschen(currentEigenschaft);
 
                 eigenschaftbeschreibungsDialog.dismiss();
+
+                notifyDataSetChanged();
 
             }
         });
@@ -125,10 +132,11 @@ public class EigenschaftenAdapter extends RecyclerView.Adapter<EigenschaftenAdap
                 Animation pop = AnimationUtils.loadAnimation(fragmentActivity, R.anim.pop);
                 okBtn.startAnimation(pop);
 
-                StickerAdden(data.get(i));
+                StickerAdden(currentEigenschaft);
 
                 eigenschaftbeschreibungsDialog.dismiss();
 
+                notifyDataSetChanged();
 
 
             }
@@ -214,6 +222,8 @@ public class EigenschaftenAdapter extends RecyclerView.Adapter<EigenschaftenAdap
         myRef = myRef.child(HomeActivity.currentNutzer.getId()).child("Meine Sticker").child(eigenschaft.getTyp()).child(eigenschaft.getId());
 
         myRef.removeValue();
+
+        //data.remove(eigenschaft);
 
     }
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -40,6 +41,10 @@ public class ProfilFragment extends Fragment {
     RecyclerView rvEigenschaften;
     ArrayList<Eigenschaft> eigenschaftenliste = new ArrayList<>();
 
+    RecyclerView rvFotos;
+
+    ArrayList<Foto> fotosliste = new ArrayList<>();
+
     Dialog profilbildzeigenDialog;
     ImageView profilbildDialog;
 
@@ -58,6 +63,10 @@ public class ProfilFragment extends Fragment {
         followeranzeigenBtn_PF = view.findViewById(R.id.followeranzeigenbtn);
         rvEigenschaften = view.findViewById(R.id.rvmerkmale);
         rvEigenschaften.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        //rvEigenschaften.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        rvFotos = view.findViewById(R.id.rvfotos);
+        rvFotos.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        rvFotos.setNestedScrollingEnabled(false);
 
         profilbildzeigenDialog = new Dialog(getContext());
         profilbildzeigenDialog.setContentView(R.layout.profilbildzeigen_layoutdialog);
@@ -83,6 +92,7 @@ public class ProfilFragment extends Fragment {
         name_PF.setText(profilNutzer.getUsername());
 
         eigenschaftenSuchen(profilNutzer);
+        fotosFinden();
 
 
 
@@ -101,7 +111,7 @@ public class ProfilFragment extends Fragment {
 
             } else {
 
-                Picasso.get().load(profilNutzer.getPhotourl()).transform(new CropCircleTransformation()).into(profilbild_PF);
+                Picasso.get().load(profilNutzer.getPhotourl()).transform(new CropCircleTransformation()).fit().centerCrop().into(profilbild_PF);
                // Toast.makeText(getContext(), "Email Profil geladen!", Toast.LENGTH_SHORT).show();
 
             }
@@ -183,6 +193,44 @@ public class ProfilFragment extends Fragment {
 
 
     //------- METHODEN ------
+
+
+    public void fotosFinden() {
+
+        // Write a message to the database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Nutzer");
+
+        myRef = myRef.child(profilNutzer.getId()).child("Fotos");
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+
+                    Foto currentFoto = ds.getValue(Foto.class);
+
+                    fotosliste.add(currentFoto);
+
+
+                }
+
+                rvFotos.setAdapter(new MeineFotosAdapter(fotosliste, getActivity()));
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
+
 
 
     public void profilbildLaden(Nutzer nutzer) {

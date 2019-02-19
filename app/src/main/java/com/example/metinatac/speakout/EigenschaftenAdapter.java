@@ -78,7 +78,7 @@ public class EigenschaftenAdapter extends RecyclerView.Adapter<EigenschaftenAdap
 
 
         eigenschaftenHolder.eigenschaft_name.setText(data.get(i).getName());
-        Picasso.get().load(data.get(i).getPhotourl()).transform(new CropCircleTransformation()).into(eigenschaftenHolder.eigenschafte_Bild);
+        Picasso.get().load(data.get(i).getPhotourl()).transform(new CropCircleTransformation()).fit().centerCrop().into(eigenschaftenHolder.eigenschafte_Bild);
         hotbaromater.setText(String.valueOf(data.get(i).getHotBarometer()));
 
 
@@ -88,14 +88,14 @@ public class EigenschaftenAdapter extends RecyclerView.Adapter<EigenschaftenAdap
             @Override
             public void onClick(View view) {
 
-                //Animation pop = AnimationUtils.loadAnimation(fragmentActivity, R.anim.pop);
-                //eigenschaftenHolder.eigenschafte_Bild.startAnimation(pop);
+                Animation pop = AnimationUtils.loadAnimation(fragmentActivity, R.anim.pop);
+                eigenschaftenHolder.eigenschafte_Bild.startAnimation(pop);
 
 
                 nameeigenschaft_Dialog.setText(data.get(i).getName());
                 beschreibungeigenschaft_Dialog.setText(data.get(i).getBeschreibung());
 
-                Picasso.get().load(data.get(i).getPhotourl()).transform(new CropCircleTransformation()).into(bildEigenschaft_Dialog);
+                Picasso.get().load(data.get(i).getPhotourl()).transform(new CropCircleTransformation()).fit().centerCrop().into(bildEigenschaft_Dialog);
 
 
                 geaddetCheck(data.get(i));

@@ -1,6 +1,7 @@
 package com.example.metinatac.speakout;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -59,6 +60,19 @@ public class GeschichtenFragment extends Fragment {
 
                 Animation pop = AnimationUtils.loadAnimation(getContext(), R.anim.pop);
                 rechtsobenBtn.startAnimation(pop);
+
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //Do something after 100ms
+
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer,
+                                new FotoHochladenFragment()).commit();
+                    }
+                }, 250);
+
+
 
 
             }

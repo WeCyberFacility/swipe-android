@@ -171,9 +171,9 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onPause() {
         super.onPause();
-        mediaPlayer.stop();
-        mediaPlayer.seekTo(0);
-        mediaPlayer.release();
+       // mediaPlayer.stop();
+        //mediaPlayer.seekTo(0);
+       // mediaPlayer.release();
 
     }
 
@@ -203,7 +203,7 @@ public class HomeActivity extends AppCompatActivity
 
                 } else {
 
-                    Picasso.get().load(currentNutzer.getPhotourl()).transform(new CropCircleTransformation()).into(drawerPb);
+                    Picasso.get().load(currentNutzer.getPhotourl()).transform(new CropCircleTransformation()).fit().centerCrop().into(drawerPb);
 
                 }
 

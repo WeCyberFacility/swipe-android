@@ -13,15 +13,21 @@
         android:roundIcon="@mipmap/swipelogo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LaunchActivity">
+        <activity
+            android:name=".LaunchActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".LogInActivity" />
+        <activity
+            android:name=".RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LogInActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="preloaded_fonts"
@@ -30,8 +36,11 @@
         <activity
             android:name=".HomeActivity"
             android:label=""
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-        <activity android:name=".GoogleUserRegisterActivity"></activity>
+        <activity
+            android:name=".GoogleUserRegisterActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

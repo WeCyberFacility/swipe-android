@@ -48,6 +48,17 @@ public class GeschichtenFragment extends Fragment {
                 Animation pop = AnimationUtils.loadAnimation(getContext(), R.anim.pop);
                 linksobenBtn.startAnimation(pop);
 
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //Do something after 100ms
+
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer,
+                                new GeschichteHinzufuegenFragment()).commit();
+                    }
+                }, 250);
+
 
 
             }
@@ -77,6 +88,8 @@ public class GeschichtenFragment extends Fragment {
 
             }
         });
+
+
 
         c_linksUnten.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -23,5 +23,19 @@
     </string-array>
 
 
+    <string-array name="GeschichtenGenere">
+        <item>Biographie</item>
+        <item>Krimi</item>
+        <item>Thriller</item>
+        <item>Liebesroman</item>
+        <item>Science Fiction</item>
+        <item>Fantasy</item>
+        <item>Horror</item>
+        <item>Historische Romane</item>
+        <item>Sachbuch</item>
+        <item>Ratgeber</item>
+    </string-array>
+
+
 
 </resources>

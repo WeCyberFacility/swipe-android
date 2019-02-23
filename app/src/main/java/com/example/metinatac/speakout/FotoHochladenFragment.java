@@ -59,6 +59,8 @@ public class FotoHochladenFragment extends Fragment {
     ImageView fotozeigeniv;
     RecyclerView rvmeineBilder;
 
+    String uploadid;
+
     ArrayList<Foto> meineBilderListe = new ArrayList<>();
 
     public int anzahlbilder;
@@ -183,9 +185,14 @@ public class FotoHochladenFragment extends Fragment {
 
         if(mImageUri!=null) {
 
+
+            mDatabaseRef = mDatabaseRef.child(HomeActivity.currentNutzer.getId()).child("Fotos");
+
+            uploadid = mDatabaseRef.push().getKey();
+
             String id = HomeActivity.currentNutzer.getUsername();
             int neuerIndex = anzahlbilder + 1;
-            final StorageReference fileReference = mStorageRef.child(id  + neuerIndex + "." +  getFileExtension(mImageUri));
+            final StorageReference fileReference = mStorageRef.child(uploadid + "." +  getFileExtension(mImageUri));
             fileReference.putFile(mImageUri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
                 public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
@@ -207,9 +214,7 @@ public class FotoHochladenFragment extends Fragment {
 
                         Toast.makeText(getContext(), "Upload erfolgreich", Toast.LENGTH_SHORT).show();
 
-                        mDatabaseRef = mDatabaseRef.child(HomeActivity.currentNutzer.getId()).child("Fotos");
 
-                        String uploadid = mDatabaseRef.push().getKey();
 
                         Foto upload = new Foto(uploadid, HomeActivity.currentNutzer.getUsername(),
                                 downloadUri.toString());

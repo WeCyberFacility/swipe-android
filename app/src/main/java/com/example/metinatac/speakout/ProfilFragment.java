@@ -42,7 +42,9 @@ public class ProfilFragment extends Fragment {
     ArrayList<Eigenschaft> eigenschaftenliste = new ArrayList<>();
 
     RecyclerView rvFotos;
+    RecyclerView rvGeschichten;
 
+    ArrayList<Geschichte> geschichtenlistePF = new ArrayList<>();
     ArrayList<Foto> fotosliste = new ArrayList<>();
 
     Dialog profilbildzeigenDialog;
@@ -67,6 +69,9 @@ public class ProfilFragment extends Fragment {
         rvFotos = view.findViewById(R.id.rvfotos);
         rvFotos.setLayoutManager(new GridLayoutManager(getContext(), 2));
         rvFotos.setNestedScrollingEnabled(false);
+
+        rvGeschichten = view.findViewById(R.id.rvgeschichten);
+        rvGeschichten.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         profilbildzeigenDialog = new Dialog(getContext());
         profilbildzeigenDialog.setContentView(R.layout.profilbildzeigen_layoutdialog);
@@ -93,6 +98,7 @@ public class ProfilFragment extends Fragment {
 
         eigenschaftenSuchen(profilNutzer);
         fotosFinden();
+        geschichtenFinden();
 
 
 
@@ -216,7 +222,11 @@ public class ProfilFragment extends Fragment {
 
                 }
 
-                rvFotos.setAdapter(new MeineFotosAdapter(fotosliste, getActivity()));
+
+
+
+                rvFotos.setAdapter(new MeineFotosAdapter(listeUmdrehen(fotosliste), getActivity()));
+
 
 
 
@@ -227,6 +237,78 @@ public class ProfilFragment extends Fragment {
 
             }
         });
+
+
+    }
+
+    public void geschichtenFinden() {
+
+        // Write a message to the database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Nutzer");
+
+        myRef = myRef.child(profilNutzer.getId()).child("Meine Buecher");
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+
+                    Geschichte currentGeschichte = ds.child("Daten").getValue(Geschichte.class);
+
+                    geschichtenlistePF.add(currentGeschichte);
+
+                }
+
+                rvGeschichten.setAdapter(new MeineGeschichtenAdapter(geschichtenlistePF, getActivity()));
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+
+
+
+
+
+    public void sizetest() {
+
+        int counter = fotosliste.size();
+
+        Toast.makeText(getContext(), String.valueOf(counter), Toast.LENGTH_SHORT).show();
+
+
+    }
+
+
+    public ArrayList<Foto> listeUmdrehen(ArrayList<Foto> arraylist) {
+
+
+        ArrayList<Foto> umgedrehteliste = new ArrayList<>();
+
+        int counter = arraylist.size()-1;
+
+
+        for (int i = 0; i<fotosliste.size(); i++) {
+
+            umgedrehteliste.add(i, fotosliste.get(counter));
+            counter = counter-1;
+
+        }
+
+
+
+        return umgedrehteliste;
+
 
 
     }

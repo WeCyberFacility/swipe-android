@@ -90,7 +90,7 @@ public class MeineGeschichtenAdapter extends RecyclerView.Adapter<MeineGeschicht
                         //Do something after 100ms
 
                         GeschichteLesenFragment newFrag = new GeschichteLesenFragment();
-                        newFrag.currentGeschichte = data.get(i);
+                        newFrag.currentGeschichte = currentGeschichte;
 
                         fragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer,
                                 newFrag).commit();
@@ -122,6 +122,8 @@ public class MeineGeschichtenAdapter extends RecyclerView.Adapter<MeineGeschicht
                 booknameTv.setText(data.get(i).getName());
                 kurzbeschreibungTv.setText(data.get(i).getKurzbeschreibung());
                 genreTv.setText(data.get(i).getGenre());
+
+                currentGeschichte = data.get(i);
 
                 buchzeigenDialog.show();
 

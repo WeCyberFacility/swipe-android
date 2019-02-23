@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/kapitelcl"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
@@ -9,6 +10,8 @@
         android:id="@+id/kapitelbild"
         android:layout_width="109dp"
         android:layout_height="103dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,6 +32,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/kapitelbild"
         app:layout_constraintEnd_toEndOf="@+id/kapitelbild"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.26" />
+        app:layout_constraintTop_toTopOf="@+id/kapitelbild"
+        app:layout_constraintVertical_bias="0.36" />
 </android.support.constraint.ConstraintLayout>

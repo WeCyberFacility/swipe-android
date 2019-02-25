@@ -15,10 +15,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class MeineGeschichtenAdapter extends RecyclerView.Adapter<MeineGeschichtenAdapter.MeineGeschichtenHolder> {
 
@@ -33,6 +37,7 @@ public class MeineGeschichtenAdapter extends RecyclerView.Adapter<MeineGeschicht
     TextView genreTv;
 
     ImageView readBtn;
+    ImageView coberbookzeigen;
 
     Geschichte currentGeschichte;
     int position;
@@ -58,6 +63,7 @@ public class MeineGeschichtenAdapter extends RecyclerView.Adapter<MeineGeschicht
         kurzbeschreibungTv = buchzeigenDialog.getWindow().findViewById(R.id.kurzbeschreibungtv);
         genreTv = buchzeigenDialog.getWindow().findViewById(R.id.genretv);
         readBtn = buchzeigenDialog.getWindow().findViewById(R.id.readbtn);
+        coberbookzeigen = buchzeigenDialog.getWindow().findViewById(R.id.coverbookanzeigen);
 
         buchzeigenDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
@@ -71,6 +77,8 @@ public class MeineGeschichtenAdapter extends RecyclerView.Adapter<MeineGeschicht
     @Override
     public void onBindViewHolder(@NonNull final MeineGeschichtenHolder meineGeschichtenHolder, final int i) {
 
+
+        Glide.with(fragmentActivity).load(data.get(i).getBookcoverurl()).centerCrop().into(meineGeschichtenHolder.bookcoverBtn);
 
 
         readBtn.setOnClickListener(new View.OnClickListener() {
@@ -113,19 +121,30 @@ public class MeineGeschichtenAdapter extends RecyclerView.Adapter<MeineGeschicht
             @Override
             public void onClick(View view) {
 
+                if(data.get(i).getId().equals("preview")) {
 
-                meineGeschichtenHolder.deltegeschichteBtn.setVisibility(View.INVISIBLE);
 
-                Animation pop = AnimationUtils.loadAnimation(fragmentActivity, R.anim.pop);
-                meineGeschichtenHolder.buchCl.startAnimation(pop);
+                } else {
 
-                booknameTv.setText(data.get(i).getName());
-                kurzbeschreibungTv.setText(data.get(i).getKurzbeschreibung());
-                genreTv.setText(data.get(i).getGenre());
 
-                currentGeschichte = data.get(i);
+                    meineGeschichtenHolder.deltegeschichteBtn.setVisibility(View.INVISIBLE);
 
-                buchzeigenDialog.show();
+                    Animation pop = AnimationUtils.loadAnimation(fragmentActivity, R.anim.pop);
+                    meineGeschichtenHolder.buchCl.startAnimation(pop);
+
+                    booknameTv.setText(data.get(i).getName());
+                    kurzbeschreibungTv.setText(data.get(i).getKurzbeschreibung());
+                    genreTv.setText(data.get(i).getGenre());
+
+                    //Picasso.get().load(data.get(i).getBookcoverurl()).fit().centerCrop().into(coberbookzeigen);
+
+                    Glide.with(fragmentActivity).load(data.get(i).getBookcoverurl()).centerCrop().into(coberbookzeigen);
+
+                    currentGeschichte = data.get(i);
+
+                    buchzeigenDialog.show();
+
+                }
 
             }
         });
@@ -135,11 +154,17 @@ public class MeineGeschichtenAdapter extends RecyclerView.Adapter<MeineGeschicht
             @Override
             public boolean onLongClick(View view) {
 
-                Animation pop = AnimationUtils.loadAnimation(fragmentActivity, R.anim.shakeloop);
-                pop.setRepeatCount(Animation.INFINITE);
-                meineGeschichtenHolder.buchCl.startAnimation(pop);
+                if(data.get(i).getId().equals("preview")) {
 
-                meineGeschichtenHolder.deltegeschichteBtn.setVisibility(View.VISIBLE);
+                } else {
+
+
+                    Animation pop = AnimationUtils.loadAnimation(fragmentActivity, R.anim.shakeloop);
+                    pop.setRepeatCount(Animation.INFINITE);
+                    meineGeschichtenHolder.buchCl.startAnimation(pop);
+
+                    meineGeschichtenHolder.deltegeschichteBtn.setVisibility(View.VISIBLE);
+                }
 
 
 

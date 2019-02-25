@@ -5,6 +5,8 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,8 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
 public class GeschichteErstellenFragment extends Fragment{
 
 
@@ -25,6 +29,11 @@ public class GeschichteErstellenFragment extends Fragment{
     EditText kurzbeschreibungEingabe;
     Button buchhochladenBtn;
     Spinner genreSpinner;
+    EditText bookcoverurlEingabe;
+    RecyclerView rvPreviewBook;
+    Button previewBtn;
+
+    ArrayList<Geschichte> geschichtenPreviewListe = new ArrayList<>();
 
     @Nullable
     @Override
@@ -36,6 +45,10 @@ public class GeschichteErstellenFragment extends Fragment{
         kurzbeschreibungEingabe = view.findViewById(R.id.kurzbeschreibungeingabe);
         buchhochladenBtn = view.findViewById(R.id.gehochladenbtn);
         genreSpinner = view.findViewById(R.id.spinnergenres);
+        bookcoverurlEingabe = view.findViewById(R.id.bookcoverurleingabe);
+        previewBtn = view.findViewById(R.id.previewbtn);
+        rvPreviewBook = view.findViewById(R.id.rvpreviewbook);
+        rvPreviewBook.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
 
@@ -47,6 +60,42 @@ public class GeschichteErstellenFragment extends Fragment{
                 buchhochladenBtn.startAnimation(pop);
 
                 BuchHochladen();
+
+
+            }
+        });
+
+
+
+        previewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                geschichtenPreviewListe = new ArrayList<>();
+
+                Animation pop = AnimationUtils.loadAnimation(getContext(), R.anim.pop);
+                previewBtn.startAnimation(pop);
+
+                if(checkAllesAusgefuellt()) {
+
+                    String genreselected = genreSpinner.getSelectedItem().toString();
+                    String namedesbuches = nameEingabe.getText().toString().trim();
+                    String kurzbeschreibungdesbuches = kurzbeschreibungEingabe.getText().toString().trim();
+                    String bookcoverurl = bookcoverurlEingabe.getText().toString().trim();
+
+                    Geschichte neueGeschichte = new Geschichte("preview", HomeActivity.currentNutzer.getId() , genreselected, bookcoverurl , namedesbuches, "", kurzbeschreibungdesbuches, 0, 0);
+
+                    geschichtenPreviewListe.add(neueGeschichte);
+
+                    rvPreviewBook.setAdapter(new MeineGeschichtenAdapter(geschichtenPreviewListe, getActivity()));
+
+
+                } else {
+
+                    Toast.makeText(getContext(), "Bitte fülle alle Felder aus!", Toast.LENGTH_SHORT).show();
+
+
+                }
 
 
             }
@@ -75,8 +124,9 @@ public class GeschichteErstellenFragment extends Fragment{
             String genreselected = genreSpinner.getSelectedItem().toString();
             String namedesbuches = nameEingabe.getText().toString().trim();
             String kurzbeschreibungdesbuches = kurzbeschreibungEingabe.getText().toString().trim();
+            String bookcoverurl = bookcoverurlEingabe.getText().toString().trim();
 
-            Geschichte neueGeschichte = new Geschichte(id, HomeActivity.currentNutzer.getId() , genreselected, namedesbuches, "", kurzbeschreibungdesbuches, 0, 0);
+            Geschichte neueGeschichte = new Geschichte(id, HomeActivity.currentNutzer.getId() , genreselected, bookcoverurl , namedesbuches, "", kurzbeschreibungdesbuches, 0, 0);
 
             myRef.child(id).child("Daten").setValue(neueGeschichte);
 
@@ -107,7 +157,7 @@ public class GeschichteErstellenFragment extends Fragment{
 
         Boolean gefunden = false;
 
-        if(nameEingabe.getText().toString().trim().equals("") || kurzbeschreibungEingabe.getText().toString().trim().equals("")) {
+        if(nameEingabe.getText().toString().trim().equals("") || kurzbeschreibungEingabe.getText().toString().trim().equals("") || bookcoverurlEingabe.getText().toString().trim().equals("")) {
 
             return false;
 

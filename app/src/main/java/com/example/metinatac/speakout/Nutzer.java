@@ -25,9 +25,13 @@ public class Nutzer {
 
     }
 
-    public Nutzer() {
+    public Nutzer(String id) {
+
+        this.id = id;
 
     }
+
+    public Nutzer (){}
 
 
     public String getId() {

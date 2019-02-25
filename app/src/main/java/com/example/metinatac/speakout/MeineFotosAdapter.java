@@ -11,6 +11,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -102,7 +103,9 @@ public class MeineFotosAdapter extends RecyclerView.Adapter<MeineFotosAdapter.Me
     @Override
     public void onBindViewHolder(@NonNull MeineFotosHolder meineFotosHolder, final int i) {
 
-        Picasso.get().load(data.get(i).getmImageUrl()).fit().centerCrop().into(meineFotosHolder.bildLayout);
+        Glide.with(fragmentActivity).load(data.get(i).getmImageUrl()).centerCrop().into(meineFotosHolder.bildLayout);
+
+        //Picasso.get().load(data.get(i).getmImageUrl()).fit().centerCrop().into(meineFotosHolder.bildLayout);
 
         meineFotosHolder.bildLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +113,9 @@ public class MeineFotosAdapter extends RecyclerView.Adapter<MeineFotosAdapter.Me
 
                 currentFoto = data.get(i);
                 schonGeliked(currentFoto);
-                Picasso.get().load(data.get(i).getmImageUrl()).fit().centerCrop().into(bildIv);
+                Glide.with(fragmentActivity).load(data.get(i).getmImageUrl()).centerCrop().into(bildIv);
+
+               // Picasso.get().load(data.get(i).getmImageUrl()).fit().centerCrop().into(bildIv);
 
 
                 fotozeigenDialog.show();

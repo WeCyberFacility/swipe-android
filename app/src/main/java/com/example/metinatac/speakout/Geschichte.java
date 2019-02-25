@@ -5,6 +5,7 @@ public class Geschichte {
     private String id;
     private String inhaberid;
     private String genre;
+    private String bookcoverurl;
     private String name;
     private String coverurl;
     private String kurzbeschreibung;
@@ -12,12 +13,13 @@ public class Geschichte {
     private int likes;
 
 
-    public Geschichte(String id, String inhaberid, String genre, String name, String coverurl, String kurzbeschreibung, int anzahlkapitel, int likes) {
+    public Geschichte(String id, String inhaberid, String genre, String bookcoverurl, String name, String coverurl, String kurzbeschreibung, int anzahlkapitel, int likes) {
 
         this.id = id;
         this.inhaberid = inhaberid;
         this.name = name;
         this.genre = genre;
+        this.bookcoverurl = bookcoverurl;
         this.coverurl = coverurl;
         this.kurzbeschreibung = kurzbeschreibung;
         this.anzahlkapitel = anzahlkapitel;
@@ -92,5 +94,13 @@ public class Geschichte {
 
     public void setInhaberid(String inhaberid) {
         this.inhaberid = inhaberid;
+    }
+
+    public String getBookcoverurl() {
+        return bookcoverurl;
+    }
+
+    public void setBookcoverurl(String bookcoverurl) {
+        this.bookcoverurl = bookcoverurl;
     }
 }

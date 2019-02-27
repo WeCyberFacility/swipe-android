@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,8 +18,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -30,10 +34,12 @@ public class GeschichteErstellenFragment extends Fragment{
     Button buchhochladenBtn;
     Spinner genreSpinner;
     EditText bookcoverurlEingabe;
-    RecyclerView rvPreviewBook;
-    Button previewBtn;
+    RecyclerView rvBookCover;
 
-    ArrayList<Geschichte> geschichtenPreviewListe = new ArrayList<>();
+    static BookCover currentBookC = new BookCover();
+
+    static ArrayList<BookCover> auswahlliste = new ArrayList<>();
+    ArrayList<BookCover> bookcoverliste = new ArrayList<>();
 
     @Nullable
     @Override
@@ -41,14 +47,17 @@ public class GeschichteErstellenFragment extends Fragment{
         View view = inflater.inflate(R.layout.geschichteerstellenfragment_layout, container, false);
 
 
+        auswahlliste = new ArrayList<>();
+
+
         nameEingabe = view.findViewById(R.id.nameeingabe);
         kurzbeschreibungEingabe = view.findViewById(R.id.kurzbeschreibungeingabe);
         buchhochladenBtn = view.findViewById(R.id.gehochladenbtn);
         genreSpinner = view.findViewById(R.id.spinnergenres);
-        bookcoverurlEingabe = view.findViewById(R.id.bookcoverurleingabe);
-        previewBtn = view.findViewById(R.id.previewbtn);
-        rvPreviewBook = view.findViewById(R.id.rvpreviewbook);
-        rvPreviewBook.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        rvBookCover = view.findViewById(R.id.rvpreviewbook);
+        rvBookCover.setLayoutManager(new GridLayoutManager(getContext(), 3));
+
 
 
 
@@ -66,40 +75,8 @@ public class GeschichteErstellenFragment extends Fragment{
         });
 
 
+        bookCoverLaden();
 
-        previewBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                geschichtenPreviewListe = new ArrayList<>();
-
-                Animation pop = AnimationUtils.loadAnimation(getContext(), R.anim.pop);
-                previewBtn.startAnimation(pop);
-
-                if(checkAllesAusgefuellt()) {
-
-                    String genreselected = genreSpinner.getSelectedItem().toString();
-                    String namedesbuches = nameEingabe.getText().toString().trim();
-                    String kurzbeschreibungdesbuches = kurzbeschreibungEingabe.getText().toString().trim();
-                    String bookcoverurl = bookcoverurlEingabe.getText().toString().trim();
-
-                    Geschichte neueGeschichte = new Geschichte("preview", HomeActivity.currentNutzer.getId() , genreselected, bookcoverurl , namedesbuches, "", kurzbeschreibungdesbuches, 0, 0);
-
-                    geschichtenPreviewListe.add(neueGeschichte);
-
-                    rvPreviewBook.setAdapter(new MeineGeschichtenAdapter(geschichtenPreviewListe, getActivity()));
-
-
-                } else {
-
-                    Toast.makeText(getContext(), "Bitte fülle alle Felder aus!", Toast.LENGTH_SHORT).show();
-
-
-                }
-
-
-            }
-        });
 
 
 
@@ -109,6 +86,43 @@ public class GeschichteErstellenFragment extends Fragment{
 
 
     // ------ METHODEN -------
+
+
+    public void bookCoverLaden() {
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("BookCover");
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+
+                    BookCover currentBookCover = ds.getValue(BookCover.class);
+
+                    bookcoverliste.add(currentBookCover);
+
+
+                }
+
+
+                rvBookCover.setAdapter(new BookCoverAdapter(bookcoverliste, getActivity()));
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+    }
+
 
 
     public void BuchHochladen() {
@@ -124,7 +138,7 @@ public class GeschichteErstellenFragment extends Fragment{
             String genreselected = genreSpinner.getSelectedItem().toString();
             String namedesbuches = nameEingabe.getText().toString().trim();
             String kurzbeschreibungdesbuches = kurzbeschreibungEingabe.getText().toString().trim();
-            String bookcoverurl = bookcoverurlEingabe.getText().toString().trim();
+            String bookcoverurl = auswahlliste.get(0).getUrl();
 
             Geschichte neueGeschichte = new Geschichte(id, HomeActivity.currentNutzer.getId() , genreselected, bookcoverurl , namedesbuches, "", kurzbeschreibungdesbuches, 0, 0);
 
@@ -153,11 +167,19 @@ public class GeschichteErstellenFragment extends Fragment{
 
     }
 
+
+    public void auswahlKriegen() {
+
+
+
+
+    }
+
     public boolean checkAllesAusgefuellt(){
 
         Boolean gefunden = false;
 
-        if(nameEingabe.getText().toString().trim().equals("") || kurzbeschreibungEingabe.getText().toString().trim().equals("") || bookcoverurlEingabe.getText().toString().trim().equals("")) {
+        if(nameEingabe.getText().toString().trim().equals("") || kurzbeschreibungEingabe.getText().toString().trim().equals("") || auswahlliste.size() == 0 || auswahlliste.size() > 1) {
 
             return false;
 

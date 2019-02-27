@@ -1,6 +1,8 @@
 package com.example.metinatac.speakout;
 
 import android.app.Dialog;
+import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
@@ -101,7 +103,7 @@ public class MeineFotosAdapter extends RecyclerView.Adapter<MeineFotosAdapter.Me
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MeineFotosHolder meineFotosHolder, final int i) {
+    public void onBindViewHolder(@NonNull final MeineFotosHolder meineFotosHolder, final int i) {
 
         Glide.with(fragmentActivity).load(data.get(i).getmImageUrl()).centerCrop().into(meineFotosHolder.bildLayout);
 
@@ -111,14 +113,32 @@ public class MeineFotosAdapter extends RecyclerView.Adapter<MeineFotosAdapter.Me
             @Override
             public void onClick(View view) {
 
-                currentFoto = data.get(i);
-                schonGeliked(currentFoto);
-                Glide.with(fragmentActivity).load(data.get(i).getmImageUrl()).centerCrop().into(bildIv);
-
-               // Picasso.get().load(data.get(i).getmImageUrl()).fit().centerCrop().into(bildIv);
+                Animation pop = AnimationUtils.loadAnimation(fragmentActivity, R.anim.popsmall);
+                meineFotosHolder.bildLayout.startAnimation(pop);
 
 
-                fotozeigenDialog.show();
+                Handler hi = new Handler();
+                hi.postDelayed(new Runnable() {
+
+
+                    @Override
+                    public void run() {
+
+                        currentFoto = data.get(i);
+                        schonGeliked(currentFoto);
+                        Glide.with(fragmentActivity).load(data.get(i).getmImageUrl()).centerCrop().into(bildIv);
+
+                        // Picasso.get().load(data.get(i).getmImageUrl()).fit().centerCrop().into(bildIv);
+
+
+                        fotozeigenDialog.show();
+
+                    }
+                }, 250);
+
+
+
+
 
 
 

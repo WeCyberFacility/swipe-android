@@ -3,6 +3,7 @@ package com.example.metinatac.speakout;
 import android.app.Dialog;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -129,12 +130,26 @@ public class ProfilFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                Animation pop = AnimationUtils.loadAnimation(getContext(), R.anim.pop);
+                Animation pop = AnimationUtils.loadAnimation(getContext(), R.anim.popsmall);
                 profilbild_PF.startAnimation(pop);
 
-                profilbildLaden(profilNutzer);
 
-                profilbildzeigenDialog.show();
+                Handler hi = new Handler();
+                hi.postDelayed(new Runnable() {
+
+
+                    @Override
+                    public void run() {
+
+
+                        profilbildLaden(profilNutzer);
+
+                        profilbildzeigenDialog.show();
+
+                    }
+                }, 250);
+
+
 
 
             }

@@ -2,6 +2,7 @@ package com.example.metinatac.speakout;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -88,21 +90,39 @@ public class EigenschaftenAdapter extends RecyclerView.Adapter<EigenschaftenAdap
             @Override
             public void onClick(View view) {
 
-                Animation pop = AnimationUtils.loadAnimation(fragmentActivity, R.anim.pop);
+                Animation pop = AnimationUtils.loadAnimation(fragmentActivity, R.anim.popsmall);
                 eigenschaftenHolder.eigenschafte_Bild.startAnimation(pop);
 
 
-                nameeigenschaft_Dialog.setText(data.get(i).getName());
-                beschreibungeigenschaft_Dialog.setText(data.get(i).getBeschreibung());
-
-                Picasso.get().load(data.get(i).getPhotourl()).transform(new CropCircleTransformation()).fit().centerCrop().into(bildEigenschaft_Dialog);
 
 
-                geaddetCheck(data.get(i));
+                Handler hi = new Handler();
+                hi.postDelayed(new Runnable() {
 
-                currentEigenschaft = data.get(i);
 
-                eigenschaftbeschreibungsDialog.show();
+                    @Override
+                    public void run() {
+
+                        nameeigenschaft_Dialog.setText(data.get(i).getName());
+                        beschreibungeigenschaft_Dialog.setText(data.get(i).getBeschreibung());
+
+                        Picasso.get().load(data.get(i).getPhotourl()).transform(new CropCircleTransformation()).fit().centerCrop().into(bildEigenschaft_Dialog);
+
+
+                        geaddetCheck(data.get(i));
+
+                        currentEigenschaft = data.get(i);
+
+                        eigenschaftbeschreibungsDialog.show();
+
+
+                    }
+                }, 250);
+
+
+
+
+
 
             }
         });
@@ -112,14 +132,29 @@ public class EigenschaftenAdapter extends RecyclerView.Adapter<EigenschaftenAdap
             @Override
             public void onClick(View view) {
 
-                Animation pop = AnimationUtils.loadAnimation(fragmentActivity, R.anim.pop);
+                Animation pop = AnimationUtils.loadAnimation(fragmentActivity, R.anim.popsmall);
                 deleteBtn.startAnimation(pop);
 
-                StickerLoeschen(currentEigenschaft);
+                Handler hi = new Handler();
+                hi.postDelayed(new Runnable() {
 
-                eigenschaftbeschreibungsDialog.dismiss();
 
-                notifyDataSetChanged();
+                    @Override
+                    public void run() {
+
+                        StickerLoeschen(currentEigenschaft);
+
+                        eigenschaftbeschreibungsDialog.dismiss();
+
+                        notifyDataSetChanged();
+
+                    }
+                }, 250);
+
+
+
+
+
 
             }
         });
@@ -129,14 +164,28 @@ public class EigenschaftenAdapter extends RecyclerView.Adapter<EigenschaftenAdap
             @Override
             public void onClick(View view) {
 
-                Animation pop = AnimationUtils.loadAnimation(fragmentActivity, R.anim.pop);
+                Animation pop = AnimationUtils.loadAnimation(fragmentActivity, R.anim.popsmall);
                 okBtn.startAnimation(pop);
 
-                StickerAdden(currentEigenschaft);
 
-                eigenschaftbeschreibungsDialog.dismiss();
+                Handler hi = new Handler();
+                hi.postDelayed(new Runnable() {
 
-                notifyDataSetChanged();
+
+                    @Override
+                    public void run() {
+
+                        StickerAdden(currentEigenschaft);
+
+                        eigenschaftbeschreibungsDialog.dismiss();
+
+                        notifyDataSetChanged();
+
+                    }
+                }, 250);
+
+
+
 
 
             }

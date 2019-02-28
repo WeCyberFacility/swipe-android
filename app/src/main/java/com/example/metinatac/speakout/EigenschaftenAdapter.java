@@ -117,7 +117,7 @@ public class EigenschaftenAdapter extends RecyclerView.Adapter<EigenschaftenAdap
 
 
                     }
-                }, 250);
+                }, 150);
 
 
 

@@ -134,7 +134,7 @@ public class MeineFotosAdapter extends RecyclerView.Adapter<MeineFotosAdapter.Me
                         fotozeigenDialog.show();
 
                     }
-                }, 250);
+                }, 180);
 
 
 

@@ -68,7 +68,7 @@ public class ProfilFragment extends Fragment {
         rvEigenschaften.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         //rvEigenschaften.setLayoutManager(new GridLayoutManager(getContext(), 3));
         rvFotos = view.findViewById(R.id.rvfotos);
-        rvFotos.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        rvFotos.setLayoutManager(new GridLayoutManager(getContext(), 3));
         rvFotos.setNestedScrollingEnabled(false);
 
         rvGeschichten = view.findViewById(R.id.rvgeschichten);
@@ -147,7 +147,7 @@ public class ProfilFragment extends Fragment {
                         profilbildzeigenDialog.show();
 
                     }
-                }, 250);
+                }, 150);
 
 
 

@@ -2,6 +2,8 @@ package com.example.metinatac.speakout;
 
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -36,6 +38,10 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
@@ -60,6 +66,8 @@ public class FotoHochladenFragment extends Fragment {
     ImageView fotozeigeniv;
     RecyclerView rvmeineBilder;
 
+    Bitmap bitmap;
+
     String uploadid;
 
     ArrayList<Foto> meineBilderListe = new ArrayList<>();
@@ -82,7 +90,7 @@ public class FotoHochladenFragment extends Fragment {
         fotozeigeniv = view.findViewById(R.id.bildzeigen);
 
         rvmeineBilder = view.findViewById(R.id.rvmeinefotosfh);
-        rvmeineBilder.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        rvmeineBilder.setLayoutManager(new GridLayoutManager(getContext(), 3));
         rvmeineBilder.setNestedScrollingEnabled(false);
 
 
@@ -159,10 +167,6 @@ public class FotoHochladenFragment extends Fragment {
 
             mImageUri = data.getData();
 
-
-
-
-
             //Picasso.get().load(mImageUri).into(fotozeigeniv);
 
             Glide.with(getContext()).load(mImageUri).centerCrop().into(fotozeigeniv);
@@ -177,6 +181,22 @@ public class FotoHochladenFragment extends Fragment {
         return mime.getExtensionFromMimeType(cR.getType(uri));
 
     }
+
+
+    public void loadImage(Uri uri){
+        try {
+
+            bitmap = BitmapFactory.decodeStream((InputStream)new URL(uri.getEncodedPath()).getContent());
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
 
     public void uploadFile(){
 

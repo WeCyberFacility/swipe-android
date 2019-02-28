@@ -88,7 +88,7 @@ public class MeineGeschichtenAdapter extends RecyclerView.Adapter<MeineGeschicht
 
                 buchzeigenDialog.dismiss();
 
-                Animation pop = AnimationUtils.loadAnimation(fragmentActivity, R.anim.popsmall);
+                Animation pop = AnimationUtils.loadAnimation(fragmentActivity, R.anim.pop);
                 readBtn.startAnimation(pop);
 
                 final Handler handler = new Handler();
@@ -103,7 +103,7 @@ public class MeineGeschichtenAdapter extends RecyclerView.Adapter<MeineGeschicht
                         fragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer,
                                 newFrag).commit();
                     }
-                }, 250);
+                }, 100);
 
 
 
@@ -154,22 +154,8 @@ public class MeineGeschichtenAdapter extends RecyclerView.Adapter<MeineGeschicht
 
 
                         }
-                    }, 250);
+                    }, 300);
 
-
-
-
-                    booknameTv.setText(data.get(i).getName());
-                    kurzbeschreibungTv.setText(data.get(i).getKurzbeschreibung());
-                    genreTv.setText(data.get(i).getGenre());
-
-                    //Picasso.get().load(data.get(i).getBookcoverurl()).fit().centerCrop().into(coberbookzeigen);
-
-                    Glide.with(fragmentActivity).load(data.get(i).getBookcoverurl()).centerCrop().into(coberbookzeigen);
-
-                    currentGeschichte = data.get(i);
-
-                    buchzeigenDialog.show();
 
                 }
 

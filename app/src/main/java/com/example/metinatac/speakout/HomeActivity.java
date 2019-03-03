@@ -264,7 +264,7 @@ public class HomeActivity extends AppCompatActivity
             //Was passiert wenn man PROFIL im Drawer drückt
             // Handle the camera action
 
-            appbarName.setText("Profil");
+           // appbarName.setText("Profil");
 
             ProfilFragment.profilNutzer = currentNutzer;
 
@@ -275,7 +275,7 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.suchen) {
             //Was passiert wenn man SUCHEN im Drawer drückt
 
-            appbarName.setText("Suchen");
+            //appbarName.setText("Suchen");
 
             getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer,
                     new SuchenFragment()).commit();
@@ -284,7 +284,7 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.einstellungen) {
             //Was passiert wenn man EINSTELLUNGEN im Drawer drückt
 
-            appbarName.setText("Einstellungen");
+           // appbarName.setText("Einstellungen");
             getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer,
                     new EinstellungenFragment()).commit();
 
@@ -292,7 +292,7 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.meinearea51) {
             //Was passiert wenn man EINSTELLUNGEN im Drawer drückt
 
-            appbarName.setText("AREA 51");
+          //  appbarName.setText("AREA 51");
             getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer,
                     new GeschichtenFragment()).commit();
 
@@ -300,7 +300,7 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.home) {
             //Was passiert wenn man HOME im Drawer drückt
 
-            appbarName.setText("Home");
+           // appbarName.setText("Home");
             getSupportFragmentManager().beginTransaction().replace(R.id.FragmentContainer,
                     new HomeFragment()).commit();
 

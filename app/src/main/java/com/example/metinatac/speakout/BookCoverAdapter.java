@@ -42,6 +42,9 @@ public class BookCoverAdapter extends RecyclerView.Adapter<BookCoverAdapter.Book
     @Override
     public void onBindViewHolder(@NonNull final BookCoverHolder bookCoverHolder, final int i) {
 
+
+        bookCoverHolder.bookcoverName.setText(data.get(i).getName());
+
         bookCoverHolder.bookcoverCb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

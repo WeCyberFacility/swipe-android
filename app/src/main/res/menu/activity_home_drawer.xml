@@ -21,12 +21,12 @@
         <item
             android:id="@+id/suchen"
             android:icon="@mipmap/searchdrawericon"
-            android:title="Suchen"
+            android:title="Search"
             />
         <item
             android:id="@+id/einstellungen"
             android:icon="@mipmap/settingsdrawericon"
-            android:title="Einstellungen" />
+            android:title="Settings" />
 
 
 

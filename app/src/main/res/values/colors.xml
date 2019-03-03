@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#001F1F1F</color>
+    <color name="colorPrimary">#d5153a</color>
+    <color name="colorPrimaryBackup">#001F1F1F</color>
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#000000</color>
     <color name="navigationBarColor">#2B2B2B</color>
@@ -9,12 +10,13 @@
     <color name="backgroundblue">#98AEE8</color>
     <color name="backgroundbluebackup">#98AEE8</color>
     <color name="blackgrau">#292929</color>
+    <color name="oldbg">#d5153a</color>
 
     //colors für Area 51
 
-    <color name="obenlinks">#B1DCE8</color>
-    <color name="obenrechts">#A16FE8</color>
-    <color name="untenlinks">#FF6961</color>
-    <color name="untenrechts">#E8C57F</color>
+    <color name="obenlinks">#7D4BBE</color>
+    <color name="obenrechts">#74A9D5</color>
+    <color name="untenlinks">#BE9876</color>
+    <color name="untenrechts">#D5BC00</color>
 
 </resources>

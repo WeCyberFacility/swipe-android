@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Swipe</string>
+    <string name="abmelden">ausloggen</string>
+    <string name="Schließen">schließen</string>
+    <string name="cancle">beenden</string>
+</resources>

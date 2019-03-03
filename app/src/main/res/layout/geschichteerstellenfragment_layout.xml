@@ -45,7 +45,7 @@
 
             <EditText
                 android:id="@+id/kurzbeschreibungeingabe"
-                android:layout_width="0dp"
+                android:layout_width="336dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"

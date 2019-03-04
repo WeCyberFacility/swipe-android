@@ -14,9 +14,9 @@
 
     //colors für Area 51
 
-    <color name="obenlinks">#7D4BBE</color>
-    <color name="obenrechts">#74A9D5</color>
-    <color name="untenlinks">#BE9876</color>
-    <color name="untenrechts">#D5BC00</color>
+    <color name="obenlinks">#D5B585</color>
+    <color name="obenrechts">#90BEB6</color>
+    <color name="untenlinks">#9DBE70</color>
+    <color name="untenrechts">#8774D5</color>
 
 </resources>

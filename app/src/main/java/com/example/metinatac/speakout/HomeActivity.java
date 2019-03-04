@@ -1,12 +1,20 @@
 package com.example.metinatac.speakout;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
@@ -28,6 +36,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -43,6 +52,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.collection.LLRBNode;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
@@ -56,6 +69,8 @@ public class HomeActivity extends AppCompatActivity
     Button logout;
     ImageView drawerPb;
     TextView userName;
+    ConstraintLayout drawerheaderBild;
+
 
     MediaPlayer mediaPlayer = new MediaPlayer();
 
@@ -66,6 +81,7 @@ public class HomeActivity extends AppCompatActivity
     ImageView bellBtn;
     ImageView msgBtn;
     TextView appbarName;
+
 
     View headerView;
 
@@ -104,6 +120,7 @@ public class HomeActivity extends AppCompatActivity
         headerView = navigationView.getHeaderView(0);
         userName = headerView.findViewById(R.id.nametxt);
         drawerPb = headerView.findViewById(R.id.drawerpb);
+        drawerheaderBild = headerView.findViewById(R.id.drawerheadebild);
 
         bellBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,6 +194,24 @@ public class HomeActivity extends AppCompatActivity
 
     }
 
+
+
+
+    private void drawerHeaderLaden(){
+
+        try {
+            URL url = new URL("https://images.unsplash.com/photo-1534448177492-6d698f12a59a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80");
+            Bitmap bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            Drawable image = new BitmapDrawable(getApplicationContext().getResources(), bitmap);
+
+            drawerheaderBild.setBackground(image);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
 
 
 
